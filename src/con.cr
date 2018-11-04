@@ -1,0 +1,4 @@
+module CON
+end
+
+require "./*"

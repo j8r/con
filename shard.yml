@@ -1,0 +1,9 @@
+name: con
+version: 0.1.0
+
+authors:
+  - Julien Reichardt <mi@jrei.ch>
+
+description: A simple, fast and readable JSON-compatible serialization format
+
+license: ISC
