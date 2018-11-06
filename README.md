@@ -9,11 +9,11 @@ Cretin Object Notation - a simple, fast and readable JSON-compatible serializati
 ```hcl
 key "string"
 pi 3.14
-hash{
+hash {
   enable true
   nothing nil
 }
-ports[
+ports [
   22
   1234
   8888

@@ -1,11 +1,11 @@
 struct CON::Builder
   getter io : IO
-  @separator : String | Char | Nil = nil
-  @add_separator : Bool = false
   @indents : String
   @previous_indents : String?
   @indent_step : String?
   @hash_braces = true
+  getter begin_hash = false
+  @begin_array = false
 
   def initialize(@io : IO, @indent_step : String? = nil)
     @indents = ""
@@ -14,7 +14,7 @@ struct CON::Builder
     @hash_braces = false
   end
 
-  protected def initialize(@io : IO, indent_step : String?, @indents : String, @separator = nil)
+  protected def initialize(@io : IO, indent_step : String?, @indents : String)
     # Increment the indentation, if any
     if @indent_step = indent_step
       @previous_indents = @indents
@@ -22,36 +22,46 @@ struct CON::Builder
     end
   end
 
-  def add_separator
-    @io << @separator
-  end
-
   def field(key : String, &block)
     if @indent_step
       @io << @indents
-    elsif @add_separator
+    elsif @begin_array
+      raise CON::Error.new("Can't use field inside an array")
+    elsif !@begin_hash
       @io << ' '
+    else
+      @begin_hash = false
     end
     key.to_con_key self
-    yield.to_con Builder.new(@io, @indent_step, @indents, ' ')
+    @io << ' '
+    yield.to_con Builder.new(@io, @indent_step, @indents)
     @io << '\n' if @indent_step
-    @add_separator = true
+  end
+
+  def value(value)
+    if indent_step = @indent_step
+      @indents = indent_step if @indents.empty?
+      io << '\n' << @indents
+    elsif @begin_hash
+      raise CON::Error.new("Can't use value inside a hash")
+    elsif !@begin_array
+      @io << ' '
+    else
+      @begin_array = false
+    end
+    value.to_con Builder.new(@io, @indent_step, @indents)
   end
 
   def array(&block)
     io << '['
-    if indent_step = @indent_step
-      @indents = indent_step if @indents.empty?
-      yield Builder.new(@io, @indent_step, @indents, '\n' + @indents)
-      io << '\n' << @previous_indents
-    else
-      yield Builder.new(@io, @indent_step, @indents, ' ')
-    end
-    io << ']'
+    @begin_array = true
+    yield
+    io << '\n' if @indent_step
+    io << @previous_indents << ']'
   end
 
   def hash(&block)
-    @io << @separator if @separator != ' '
+    @begin_hash = true
     if @hash_braces
       @io << '{'
       @io << '\n' if @indent_step
@@ -60,6 +70,5 @@ struct CON::Builder
     else
       yield
     end
-    @add_separator = false
   end
 end

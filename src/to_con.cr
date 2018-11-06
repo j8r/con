@@ -22,28 +22,24 @@ end
 
 struct Int
   def to_con(con : CON::Builder)
-    con.add_separator
     con.io << self
   end
 end
 
 struct Float
   def to_con(con : CON::Builder)
-    con.add_separator
     con.io << self
   end
 end
 
 struct Nil
   def to_con(con : CON::Builder)
-    con.add_separator
     con.io << "nil"
   end
 end
 
 struct Bool
   def to_con(con : CON::Builder)
-    con.add_separator
     con.io << self
   end
 end
@@ -80,7 +76,6 @@ class String
 
   def to_con(con : CON::Builder)
     string = self
-    con.add_separator
     con.io << '"'
     start_pos = 0
     reader = Char::Reader.new(string)
@@ -117,8 +112,10 @@ end
 
 class Array
   def to_con(con : CON::Builder)
-    con.array do |con_element|
-      each &.to_con con_element
+    con.array do
+      each do |element|
+        con.value element
+      end
     end
   end
 end

@@ -72,7 +72,7 @@ Arrays consists of elements separated by a delimiter, and enclosed by brackets.
 Arrays of hashes don't require a delimiter.
 
 ```
-array[
+array [
   "a"
   1
 ]
@@ -89,7 +89,7 @@ Hashes consists of key/value pairs separated by a delimiter, and enclosed by cur
 Curly braces aren't needed at the start/end of a document.
 
 ```
-hash{
+hash {
   key "value"
   other "val"
 }
