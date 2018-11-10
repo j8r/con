@@ -1,6 +1,8 @@
 require "string_pool"
 
 module CON
+  alias Type = Bool | Float64 | Int64 | String | Nil
+
   def self.parse(source : String | IO) : Any
     CON::Any.new CON::PullParser.new(source)
   end
@@ -29,14 +31,27 @@ module CON
 end
 
 module CON::Lexer::Main
-  @buffer = IO::Memory.new
+  struct Null
+    def <<(value)
+    end
+
+    def clear
+    end
+  end
+
+  @buffer : IO::Memory = IO::Memory.new
   @string_pool = StringPool.new
   getter line_number = 1
   getter column_number = 1
   getter current_char : Char
+  getter skip : Bool = false
 
-  def next_value
-    skip_whitespaces
+  def skip=(@skip : Bool)
+    @buffer = @skip ? Null.new : IO::Memory.new
+  end
+
+  def next_value : Type | CON::Token
+    skip_whitespaces_and_comments
     case @current_char
     when '"'                                                   then next_char; consume_string
     when '['                                                   then next_char; Token::BeginArray
@@ -52,14 +67,13 @@ module CON::Lexer::Main
     end
   end
 
-  def next_key
-    skip_whitespaces
+  def next_key : String | Nil | CON::Token
+    skip_whitespaces_and_comments
     case @current_char
     when '{'  then next_char; return Token::BeginHash
     when '}'  then next_char; return Token::EndHash
     when '['  then next_char; return Token::BeginArray
     when ']'  then next_char; return Token::EndArray
-    when '#'  then skip_comment
     when '\0' then return Token::EOF
     end
     @column_number = 1
@@ -70,7 +84,7 @@ module CON::Lexer::Main
     while true
       case @current_char
       when '\\'                            then consume_escape
-      when ' ', '\n', '\t', '\r', '[', '{' then return build_string
+      when ' ', '\n', '\t', '\r', '[', '{' then return build_string if !@skip
       when '\0'                            then return Token::EOF
       else                                      @buffer << @current_char
       end
@@ -82,7 +96,7 @@ module CON::Lexer::Main
     while true
       case @current_char
       when '\\' then consume_escape
-      when '"'  then next_char; return build_string
+      when '"'  then next_char; return build_string if !@skip
       when '\0' then return Token::EOF
       else           @buffer << @current_char
       end
@@ -95,7 +109,7 @@ module CON::Lexer::Main
     while next_char
       case @current_char
       when '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' then @buffer << @current_char
-      when '\0', ' ', '\n', '\t', '\r', ']', '}'            then return build_string.to_f64
+      when '\0', ' ', '\n', '\t', '\r', ']', '}'            then return build_string.to_f64 if !@skip
       else                                                       unexpected_char "float"
       end
     end
@@ -106,7 +120,7 @@ module CON::Lexer::Main
     while next_char
       case @current_char
       when '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' then @buffer << @current_char
-      when '\0', ' ', '\n', '\t', '\r', ']', '}'            then return build_string.to_i64
+      when '\0', ' ', '\n', '\t', '\r', ']', '}'            then return build_string.to_i64 if !@skip
       when '.'                                              then return consume_float
       else                                                       unexpected_char "int"
       end
@@ -125,25 +139,23 @@ module CON::Lexer::Main
   end
 
   private def build_string : String
-    string = @string_pool.get @buffer
+    string = @string_pool.get(@buffer)
     @buffer.clear
     string
   end
 
-  private def skip_whitespaces
+  private def skip_whitespaces_and_comments
     while true
       case @current_char
       when ' ', '\t', '\r' then next_char
       when '\n'            then next_char; @line_number += 1
-      else                      break
+      when '#'
+        # Skip comments
+        while next_char != '\n'
+        end
+      else break
       end
     end
-  end
-
-  private def skip_comment
-    while next_char != '\n'
-    end
-    next_char
   end
 
   private def consume_true : Bool

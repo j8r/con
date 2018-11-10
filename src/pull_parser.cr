@@ -1,7 +1,7 @@
 require "./lexer.cr"
 
 class CON::PullParser
-  protected getter lexer : CON::Lexer::FromIO | CON::Lexer::FromString
+  getter lexer : CON::Lexer::FromIO | CON::Lexer::FromString
 
   def initialize(string : String)
     @lexer = CON::Lexer::FromString.new string
@@ -15,7 +15,7 @@ class CON::PullParser
     expect @lexer.next_key, String
   end
 
-  def read_value
+  def read_value : Type | CON::Token
     @lexer.next_value
   end
 
@@ -37,7 +37,12 @@ class CON::PullParser
   end
 
   def read_document(&block)
-    loop_until Token::EOF
+    case key = @lexer.next_key
+    when Token::BeginHash then read_hash_unchecked { |key| yield key }
+    when String           then yield key; loop_until Token::EOF
+    when Token::EOF       then return
+    else                       expect key, String
+    end
   end
 
   def read_hash(&block)
