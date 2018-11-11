@@ -59,8 +59,8 @@ class String
       when '\r' then escape = "\\r"
       when '\t' then escape = "\\t"
       when '{'  then escape = "\\{"
-      when '['  then escape = "\\["
       when '}'  then escape = "\\}"
+      when '['  then escape = "\\["
       when ']'  then escape = "\\]"
       else
         reader.next_char
@@ -132,7 +132,7 @@ class Hash
   def to_con(con : CON::Builder)
     con.hash do
       each do |key, value|
-        con.field(key) { value }
+        con.field key, value
       end
     end
   end
@@ -152,7 +152,7 @@ struct NamedTuple
   def to_con(con : CON::Builder)
     con.hash do
       {% for key in T.keys %}
-        con.field({{key.stringify}}) { self[{{key.symbolize}}] }
+        con.field({{key.stringify}}), self[{{key.symbolize}}]
       {% end %}
     end
   end

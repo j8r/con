@@ -1,10 +1,16 @@
 require "string_pool"
 
+class StringPool
+  def get(null)
+    ""
+  end
+end
+
 module CON
   alias Type = Bool | Float64 | Int64 | String | Nil
 
   def self.parse(source : String | IO) : Any
-    CON::Any.new CON::PullParser.new(source)
+    CON::Any.from_con CON::PullParser.new(source)
   end
 
   # Generic CON error.
@@ -37,17 +43,21 @@ module CON::Lexer::Main
 
     def clear
     end
+
+    def write(slice)
+      raise "Can't write to a buffer when nobufferping"
+    end
   end
 
-  @buffer : IO::Memory = IO::Memory.new
+  @buffer : IO::Memory | Null = IO::Memory.new
   @string_pool = StringPool.new
   getter line_number = 1
   getter column_number = 1
   getter current_char : Char
-  getter skip : Bool = false
+  getter nobuffer : Bool = false
 
-  def skip=(@skip : Bool)
-    @buffer = @skip ? Null.new : IO::Memory.new
+  def nobuffer=(@nobuffer : Bool)
+    @buffer = @nobuffer ? Null.new : IO::Memory.new
   end
 
   def next_value : Type | CON::Token
@@ -84,7 +94,7 @@ module CON::Lexer::Main
     while true
       case @current_char
       when '\\'                            then consume_escape
-      when ' ', '\n', '\t', '\r', '[', '{' then return build_string if !@skip
+      when ' ', '\n', '\t', '\r', '[', '{' then return build_string
       when '\0'                            then return Token::EOF
       else                                      @buffer << @current_char
       end
@@ -96,7 +106,7 @@ module CON::Lexer::Main
     while true
       case @current_char
       when '\\' then consume_escape
-      when '"'  then next_char; return build_string if !@skip
+      when '"'  then next_char; return build_string
       when '\0' then return Token::EOF
       else           @buffer << @current_char
       end
@@ -109,7 +119,7 @@ module CON::Lexer::Main
     while next_char
       case @current_char
       when '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' then @buffer << @current_char
-      when '\0', ' ', '\n', '\t', '\r', ']', '}'            then return build_string.to_f64 if !@skip
+      when '\0', ' ', '\n', '\t', '\r', '[', ']', '{', '}'  then return build_string.to_f64 if !@nobuffer
       else                                                       unexpected_char "float"
       end
     end
@@ -120,7 +130,7 @@ module CON::Lexer::Main
     while next_char
       case @current_char
       when '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' then @buffer << @current_char
-      when '\0', ' ', '\n', '\t', '\r', ']', '}'            then return build_string.to_i64 if !@skip
+      when '\0', ' ', '\n', '\t', '\r', '[', ']', '{', '}'  then return build_string.to_i64 if !@nobuffer
       when '.'                                              then return consume_float
       else                                                       unexpected_char "int"
       end

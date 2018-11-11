@@ -5,8 +5,8 @@ struct CON::Any
   getter raw : Type
 
   # Initializing document
-  def self.new(pull : CON::PullParser)
-    case first_key = pull.lexer.next_key
+  def self.from_con(pull : CON::PullParser)
+    case first_key = pull.next_key_unchecked
     when String
       hash = Hash(String, Any).new
       hash[first_key] = new pull.read_value, pull
@@ -19,7 +19,12 @@ struct CON::Any
     end
   end
 
-  private def self.new(token : Token, pull : CON::PullParser)
+  # :nodoc:
+  def self.from_con(value : Token, pull : CON::PullParser)
+    new value, pull
+  end
+
+  def self.new(token : Token, pull : CON::PullParser)
     case token
     when Token::BeginHash
       hash = Hash(String, Any).new

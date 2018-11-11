@@ -48,7 +48,7 @@ struct CON::Lexer::FromString
       end
     end
 
-    @string_pool.get(@reader.string.to_unsafe + start_pos, @reader.pos - start_pos - 1) if !@skip
+    @string_pool.get(@reader.string.to_unsafe + start_pos, @reader.pos - start_pos - 1)
   end
 
   private def consume_key
@@ -63,7 +63,7 @@ struct CON::Lexer::FromString
       end
       next_char
     end
-    @string_pool.get(@reader.string.to_unsafe + start_pos, @reader.pos - start_pos) if !@skip
+    @string_pool.get(@reader.string.to_unsafe + start_pos, @reader.pos - start_pos)
   end
 
   def string_range(start_pos, end_pos)
