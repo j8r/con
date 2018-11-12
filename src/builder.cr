@@ -1,10 +1,12 @@
+require "./to_con"
+
 module CON
   struct Builder
     getter io : IO
     @total_indent : String
     @previous_total_indent : String?
     @indent : String?
-    @hash_braces = true
+    @root_document = false
     @begin_hash = false
     @begin_array = false
 
@@ -12,7 +14,8 @@ module CON
       @total_indent = @indent || ""
       @previous_total_indent = nil
       # Not needed at the start/end of a document
-      @hash_braces = false
+      @root_document = true
+      @begin_hash = true
     end
 
     protected def initialize(@io : IO, indent : String?, @total_indent : String)
@@ -24,14 +27,14 @@ module CON
     end
 
     def field(key : String, value)
-      if @indent
-        @io << @total_indent
-      elsif @begin_array
+      if @begin_array
         raise CON::Error.new("Can't use field inside an array")
-      elsif !@begin_hash
-        @io << ' '
-      else
+      elsif @indent
+        @io << @total_indent
+      elsif @begin_hash
         @begin_hash = false
+      else
+        @io << ' '
       end
       key.to_con_key self
       @io << ' '
@@ -40,15 +43,18 @@ module CON
     end
 
     def value(value)
-      if indent = @indent
+      if @begin_hash && !@root_document
+        raise CON::Error.new("Can't use value inside a hash")
+      elsif indent = @indent
         @total_indent = indent if @total_indent.empty?
         io << '\n' << @total_indent
-      elsif @begin_hash
-        raise CON::Error.new("Can't use value inside a hash")
-      elsif !@begin_array
-        @io << ' '
-      else
+      elsif @root_document
+        @begin_hash = true
+        @root_document = false
+      elsif @begin_array
         @begin_array = false
+      else
+        @io << ' '
       end
       value.to_con Builder.new(@io, @indent, @total_indent)
     end
@@ -65,34 +71,40 @@ module CON
 
     def array(key : String, &block)
       key(key)
-      @begin_array = true
-      Builder.new(@io, @indent, @total_indent).array { yield }
+      array { yield }
     end
 
     def array(&block)
       io << '['
       @begin_array = true
       @begin_hash = false
+      previous_root_document = @root_document
+      @root_document = false
       yield
+      @root_document = previous_root_document
       io << '\n' if @indent
       io << @previous_total_indent << ']'
     end
 
     def hash(key : String, &block)
       key(key)
-      @begin_hash = true
-      Builder.new(@io, @indent, @total_indent).hash { yield }
+      @begin_array = false
+      previous_root_document = @root_document
+      @root_document = false
+      hash { yield }
+      @root_document = previous_root_document
     end
 
     def hash(&block)
       @begin_hash = true
-      if @hash_braces
+      if @root_document
+        yield
+      else
         @io << '{'
         @io << '\n' if @indent
         yield
+        @io << '\n' if @indent
         @io << @previous_total_indent << '}'
-      else
-        yield
       end
       @begin_hash = false
     end
