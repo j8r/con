@@ -23,8 +23,8 @@ ports [
 ## Features
 
 - Backward compatible with JSON
-- Easy to read, easy and fast to parse
-- Simple spec
+- Easy to read, fast to parse
+- Simple specifications
 
 ## Specifications
 

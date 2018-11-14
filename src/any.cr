@@ -6,7 +6,7 @@ struct CON::Any
 
   # Initializing document
   def self.from_con(pull : CON::PullParser)
-    case first_key = pull.next_key_unchecked
+    case first_key = pull.read_key_unchecked
     when String
       hash = Hash(String, Any).new
       hash[first_key] = new pull.read_value, pull

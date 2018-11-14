@@ -4,15 +4,34 @@ class CON::PullParser
   @lexer : CON::Lexer::FromIO | CON::Lexer::FromString
 
   # Skips all subdata of a key
-  def skip
+  def skip_value
     @lexer.nobuffer = true
     case value = read_value
-    when Token::BeginHash  then read_hash_unchecked { |key| skip }
-    when Token::BeginArray then read_array_unchecked { |element| skip }
-    when Type              then return
-    else                        expect value, Union(Type | Token::BeginHash | Token::BeginArray)
+    when Token::BeginHash  then skip_hash
+    when Token::BeginArray then skip_array
+    when Type # good
+
+    else expect value, Union(Type | Token::BeginHash | Token::BeginArray)
     end
     @lexer.nobuffer = false
+    value
+  end
+
+  # Skips array elements
+  private def skip_array
+    read_array_unchecked do |element|
+      case element
+      when Token::BeginHash  then skip_hash
+      when Token::BeginArray then skip_array
+      end
+    end
+  end
+
+  # Skips hash key/values
+  private def skip_hash
+    read_hash_unchecked do |key|
+      skip_value
+    end
   end
 
   def line_number : Int32
@@ -31,7 +50,7 @@ class CON::PullParser
     @lexer = CON::Lexer::FromIO.new io
   end
 
-  def next_key_unchecked : String | Token | Nil
+  def read_key_unchecked : String | Token | Nil
     @lexer.next_key
   end
 
@@ -44,28 +63,28 @@ class CON::PullParser
   end
 
   def read_array_unchecked(&block)
-    while !(value = @lexer.next_value).is_a? Token::EndArray
-      yield value
+    while true
+      case value = @lexer.next_value
+      when Token::EndArray            then break
+      when Token::EOF, Token::EndHash then unexpected_token value
+      else                                 yield value
+      end
     end
   end
 
   def read_array(&block)
     expect @lexer.next_value, Token::BeginArray
-    read_array_unchecked do |value|
-      yield value
-    end
+    yield
+    expect @lexer.next_value, Token::EndArray
   end
 
   def read_hash_unchecked(&block)
-    loop_until Token::EndHash
-  end
-
-  def read_document(&block)
-    case key = @lexer.next_key
-    when Token::BeginHash then read_hash_unchecked { |key| yield key }
-    when String           then yield key; loop_until Token::EOF
-    when Token::EOF       then return
-    else                       expect key, Union(Token::BeginHash | String | Token::EOF)
+    while true
+      case key = @lexer.next_key
+      when String         then yield key
+      when Token::EndHash then break
+      else                     expect key, String
+      end
     end
   end
 
@@ -76,13 +95,19 @@ class CON::PullParser
     end
   end
 
-  macro loop_until(kind)
-    while true
-      case key = @lexer.next_key
-      when String     then yield key
-      when {{kind}}   then break
-      else                 expect key, String
+  def read_document(&block)
+    case key = @lexer.next_key
+    when Token::BeginHash then read_hash_unchecked { |key| yield key }
+    when String
+      while true
+        case key = @lexer.next_key
+        when String     then yield key
+        when Token::EOF then return
+        else                 expect key, String
+        end
       end
+    when Token::EOF then return
+    else                 expect key, Union(Token::BeginHash | String | Token::EOF)
     end
   end
 
@@ -93,7 +118,7 @@ class CON::PullParser
     end
   end
 
-  protected def unexpected_token
+  protected def unexpected_token(token)
     parse_exception "Unexpected token: #{token}"
   end
 

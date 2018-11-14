@@ -119,7 +119,7 @@ module CON::Lexer::Main
     while next_char
       case @current_char
       when '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' then @buffer << @current_char
-      when '\0', ' ', '\n', '\t', '\r', '[', ']', '{', '}'  then return build_string.to_f64 if !@nobuffer
+      when '\0', ' ', '\n', '\t', '\r', '[', ']', '{', '}'  then @nobuffer ? return : return build_string.to_f64
       else                                                       unexpected_char "float"
       end
     end
@@ -130,7 +130,7 @@ module CON::Lexer::Main
     while next_char
       case @current_char
       when '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' then @buffer << @current_char
-      when '\0', ' ', '\n', '\t', '\r', '[', ']', '{', '}'  then return build_string.to_i64 if !@nobuffer
+      when '\0', ' ', '\n', '\t', '\r', '[', ']', '{', '}'  then @nobuffer ? return : return build_string.to_i64
       when '.'                                              then return consume_float
       else                                                       unexpected_char "int"
       end
@@ -159,11 +159,17 @@ module CON::Lexer::Main
       case @current_char
       when ' ', '\t', '\r' then next_char
       when '\n'            then next_char; @line_number += 1
-      when '#'
-        # Skip comments
-        while next_char != '\n'
-        end
-      else break
+      when '#'             then skip_comments
+      else                      break
+      end
+    end
+  end
+
+  private def skip_comments
+    # Skip comments
+    while true
+      case next_char
+      when '\n', '\0' then break
       end
     end
   end
