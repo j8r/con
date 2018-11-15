@@ -88,23 +88,40 @@ describe CON::PullParser do
   it "reads array" do
     pull = CON::PullParser.new(%([1]))
     pull.read_array do
-      pull.read_value.should eq(1)
+      pull.read_value.should eq 1
+    end
+  end
+
+  it "reads array with coments" do
+    pull = CON::PullParser.new(%([1\n# some comments \n 2]))
+    pull.read_array do
+      pull.read_value.should eq 1
+      pull.read_value.should eq 2
     end
   end
 
   it "reads hash" do
     pull = CON::PullParser.new(%({foo 1}))
     pull.read_hash do |key|
-      key.should eq("foo")
-      pull.read_value.should eq(1)
+      key.should eq "foo"
+      pull.read_value.should eq 1
     end
   end
 
-  it "reads document" do
-    pull = CON::PullParser.new(%(foo 1))
-    pull.read_document do |key|
-      key.should eq("foo")
-      pull.read_value.should eq(1)
+  describe "document" do
+    it "reads with brackets" do
+      pull = CON::PullParser.new(%({foo 1}))
+      pull.read_document do |key|
+        key.should eq "foo"
+        pull.read_value.should eq 1
+      end
+    end
+    it "reads with coments" do
+      pull = CON::PullParser.new(%(foo # comments\n1))
+      pull.read_document do |key|
+        key.should eq "foo"
+        pull.read_value.should eq 1
+      end
     end
   end
 

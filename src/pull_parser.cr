@@ -99,6 +99,7 @@ class CON::PullParser
     case key = @lexer.next_key
     when Token::BeginHash then read_hash_unchecked { |key| yield key }
     when String
+      yield key
       while true
         case key = @lexer.next_key
         when String     then yield key
