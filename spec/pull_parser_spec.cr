@@ -4,7 +4,7 @@ require "../src/pull_parser"
 def assert_pull_parse_value(string : String, expected)
   it "reads value '#{string}'" do
     pull_parser = CON::PullParser.new string
-    pull_parser.read_value.should eq expected
+    pull_parser.read_value_unchecked.should eq expected
   end
 end
 
@@ -13,7 +13,7 @@ private def assert_pull_parse_skip_value(string : String)
     pull_parser = CON::PullParser.new string
     pull_parser.skip_value
     # Nothing remains to parse
-    pull_parser.read_value.should eq CON::Token::EOF
+    pull_parser.read_value_unchecked.should eq CON::Token::EOF
   end
 end
 
@@ -73,7 +73,7 @@ describe CON::PullParser do
       {"string", %("hello")},
       {"array", %([10 20 [30] [40]])},
       {"object", %({foo [1 2] bar {baz [3]}})},
-    ].each do |(desc, obj)|
+    ].each do |desc, obj|
       it "#{desc}" do
         pull = CON::PullParser.new("[1 #{obj} 2]")
         pull.read_array do

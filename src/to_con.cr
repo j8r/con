@@ -106,7 +106,7 @@ end
 
 struct Symbol
   def to_con(con : CON::Builder)
-    to_s.to_con_key con
+    to_s.to_con con
   end
 end
 
@@ -122,8 +122,10 @@ end
 
 struct Set
   def to_con(con : CON::Builder)
-    con.array do |con_element|
-      each &.to_con con_element
+    con.array do
+      each do |element|
+        con.value element
+      end
     end
   end
 end
@@ -140,9 +142,9 @@ end
 
 struct Tuple
   def to_con(con : CON::Builder)
-    con.array do |con_element|
+    con.array do
       {% for i in 0...T.size %}
-        self[{{i}}].to_con(con_element)
+      con.value self[{{i}}]
       {% end %}
     end
   end
@@ -152,7 +154,7 @@ struct NamedTuple
   def to_con(con : CON::Builder)
     con.hash do
       {% for key in T.keys %}
-        con.field({{key.stringify}}), self[{{key.symbolize}}]
+        con.field({{key.stringify}}, self[{{key.symbolize}}])
       {% end %}
     end
   end

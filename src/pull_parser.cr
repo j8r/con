@@ -6,7 +6,7 @@ class CON::PullParser
   # Skips all subdata of a key
   def skip_value
     @lexer.nobuffer = true
-    case value = read_value
+    case value = read_value_unchecked
     when Token::BeginHash  then skip_hash
     when Token::BeginArray then skip_array
     when Type # good
@@ -50,15 +50,19 @@ class CON::PullParser
     @lexer = CON::Lexer::FromIO.new io
   end
 
-  def read_key_unchecked : String | Token | Nil
-    @lexer.next_key
-  end
-
   def read_key : String
     expect @lexer.next_key, String
   end
 
-  def read_value : Type | Token
+  def read_key_unchecked : String | Token | Nil
+    @lexer.next_key
+  end
+
+  def read_value : Type
+    expect @lexer.next_value, Type
+  end
+
+  def read_value_unchecked : Type | Token
     @lexer.next_value
   end
 

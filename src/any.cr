@@ -9,9 +9,9 @@ struct CON::Any
     case first_key = pull.read_key_unchecked
     when String
       hash = Hash(String, Any).new
-      hash[first_key] = new pull.read_value, pull
+      hash[first_key] = new pull.read_value_unchecked, pull
       pull.read_document do |key|
-        hash[key] = new pull.read_value, pull
+        hash[key] = new pull.read_value_unchecked, pull
       end
       new hash
     else
@@ -29,7 +29,7 @@ struct CON::Any
     when Token::BeginHash
       hash = Hash(String, Any).new
       pull.read_hash_unchecked do |key|
-        hash[key] = new pull.read_value, pull
+        hash[key] = new pull.read_value_unchecked, pull
       end
       new hash
     when Token::BeginArray

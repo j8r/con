@@ -26,7 +26,7 @@ module CON
       end
     end
 
-    def field(key : String, value)
+    def field(key, value)
       if @begin_array
         raise CON::Error.new("Can't use field inside an array")
       elsif @indent
@@ -36,7 +36,7 @@ module CON
       else
         @io << ' '
       end
-      key.to_con_key self
+      key.to_s.to_con_key self
       @io << ' '
       value.to_con Builder.new(@io, @indent, @total_indent)
       @io << '\n' if @indent
