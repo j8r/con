@@ -1,6 +1,6 @@
 require "spec"
+require "big"
 require "../src/to_con"
-require "../src/big"
 require "../src/uuid"
 
 enum CONSpecEnum

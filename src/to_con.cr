@@ -1,3 +1,5 @@
+require "./builder"
+
 class Object
   def to_con
     String.build do |str|

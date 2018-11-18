@@ -2,6 +2,9 @@ require "./to_con"
 
 module CON
   struct Builder
+    class Error < Exception
+    end
+
     getter io : IO
     @total_indent : String
     @previous_total_indent : String?
@@ -28,7 +31,7 @@ module CON
 
     def field(key, value)
       if @begin_array
-        raise CON::Error.new("Can't use field inside an array")
+        raise CON::Builder::Error.new("Can't use field inside an array")
       elsif @indent
         @io << @total_indent
       elsif @begin_hash
@@ -44,7 +47,7 @@ module CON
 
     def value(value)
       if @begin_hash && !@root_document
-        raise CON::Error.new("Can't use value inside a hash")
+        raise CON::Builder::Error.new("Can't use value inside a hash")
       elsif indent = @indent
         @total_indent = indent if @total_indent.empty?
         io << '\n' << @total_indent

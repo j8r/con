@@ -117,10 +117,14 @@ class CON::PullParser
   end
 
   macro expect(value, kind)
-    case _value = {{value}}
-    when {{kind}}   then _value
-    else                 parse_exception "Expected {{kind}}, got #{_value.class} (#{_value.inspect})"
+    case %value = {{value}}
+    when {{kind}}   then %value
+    else                 parse_exception "Expected {{kind}}, got #{%value.class} (#{%value.inspect})"
     end
+  end
+
+  def type_error(value, kind)
+    parse_exception "Expected #{kind}, got #{value.class} (#{value.inspect})"
   end
 
   protected def unexpected_token(token)

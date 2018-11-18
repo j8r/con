@@ -1,6 +1,5 @@
 require "./pull_parser"
 require "./from_con"
-require "./any"
 
 module CON
   # The `CON.mapping` macro defines how an object is mapped to CON.
@@ -8,7 +7,7 @@ module CON
   # ### Example
   #
   # ```
-  # require "json"
+  # require "con"
   #
   # class Location
   #   CON.mapping(
@@ -20,7 +19,7 @@ module CON
   # class House
   #   getter address : String
   #   getter location : Location?
-  #   JSON.mapping(
+  #   CON.mapping(
   #     address: "address",
   #     location: "location",
   #   )

@@ -19,8 +19,13 @@ require "uuid"
 # uuid.to_con # => "87b3042b-9b9a-41b7-8b15-a93d3f17025e"
 # ```
 struct UUID
-  def self.new(pull : CON::PullParser)
-    new pull.read_value
+  def self.from_con(pull : CON::PullParser) : UUID
+    UUID.from_con pull.read_value, pull
+  end
+
+  def self.from_con(value, pull : CON::PullParser) : UUID
+    pull.type_error value, String if !value.is_a? String
+    new value
   end
 
   def to_con(con : CON::Builder)
