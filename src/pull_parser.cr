@@ -116,10 +116,15 @@ class CON::PullParser
     end
   end
 
+  def expect(value, kind : T.class) forall T
+    type_error(value, kind) if !value.is_a? T
+    value
+  end
+
   macro expect(value, kind)
     case %value = {{value}}
     when {{kind}}   then %value
-    else                 parse_exception "Expected {{kind}}, got #{%value.class} (#{%value.inspect})"
+    else                 type_error %value, {{kind}}
     end
   end
 

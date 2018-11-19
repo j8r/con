@@ -24,8 +24,7 @@ struct UUID
   end
 
   def self.from_con(value, pull : CON::PullParser) : UUID
-    pull.type_error value, String if !value.is_a? String
-    new value
+    new pull.expect(value, String)
   end
 
   def to_con(con : CON::Builder)

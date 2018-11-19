@@ -10,8 +10,7 @@ end
 {% integers = %w(Int8 Int16 Int32 Int64 UInt8 UInt16 UInt32 UInt64) %}
 {% for type in integers %}
 def {{type.id}}.from_con(value : CON::Type | CON::Token, pull : CON::PullParser) : {{type.id}}
-  pull.type_error value, Int64 if !value.is_a? Int64
-  {{type.id}}.new value
+  {{type.id}}.new(pull.expect value, Int64)
 end
 {% end %}
 
@@ -19,8 +18,7 @@ end
 {% for type in con_types %}
 # :nodoc:
 def {{type.id}}.from_con(value : CON::Type | CON::Token, pull : CON::PullParser) : {{type.id}}
-  pull.type_error value, {{type.id}} if !value.is_a? {{type.id}}
-  value
+  pull.expect value, {{type.id}}
 end
 {% end %}
 
@@ -33,10 +31,7 @@ end
 
 {% for float in %w(32 64) %}
 def Float{{float.id}}.from_con(value : CON::Type | CON::Token, pull : CON::PullParser) : Float{{float.id}}
-  case value
-  when Float64, Int64 then value.to_f{{float.id}}
-  else pull.type_error value, Float64 | Int64
-  end
+  pull.expect(value, Float64 | Int64).to_f{{float.id}}
 end
 {% end %}
 
@@ -190,7 +185,7 @@ struct Enum
     case value
     when String then parse value
     when Int64  then from_value value
-    else             pull.type_error value, String | Int64
+    else             pull.expect value, String | Int64
     end
   end
 end
@@ -201,8 +196,7 @@ struct Time
   end
 
   def self.from_con(value, pull : CON::PullParser)
-    pull.type_error value, String if !value.is_a? String
-    Time::Format::ISO_8601_DATE_TIME.parse value
+    Time::Format::ISO_8601_DATE_TIME.parse(pull.expect value, String)
   end
 
   struct Format
@@ -211,8 +205,7 @@ struct Time
     end
 
     def self.from_con(value, pull : CON::PullParser)
-      pull.type_error value, String if !value.is_a? String
-      parse value, Time::Location::UTC
+      parse pull.expect(value, String), Time::Location::UTC
     end
   end
 
@@ -222,8 +215,7 @@ struct Time
     end
 
     def self.from_con(value, pull : CON::PullParser)
-      pull.type_error value, Int64 if !value.is_a? Int64
-      Time.unix value
+      Time.unix pull.type_error(value, Int64)
     end
   end
 
@@ -233,8 +225,7 @@ struct Time
     end
 
     def self.from_con(value, pull : CON::PullParser)
-      pull.type_error value, Int64 if !value.is_a? Int64
-      Time.unix_ms value
+      Time.unix_ms pull.except(value, Int64)
     end
   end
 end

@@ -6,8 +6,7 @@ struct BigInt
   end
 
   def self.from_con(value, pull : CON::PullParser) : BigInt
-    pull.type_error value, Int64 | String if !value.is_a? Int64 | String
-    BigInt.new value
+    BigInt.new(pull.expect value, Int64 | String)
   end
 end
 
@@ -18,8 +17,7 @@ struct {{big.id}}
   end
 
   def self.from_con(value, pull : CON::PullParser) : {{big.id}}
-    pull.type_error value, String | Int64 | Float64 if !value.is_a? String | Int64 | Float64
-    {{big.id}}.new value
+    {{big.id}}.new pull.expect(value, String | Int64 | Float64)
   end
 end
 {% end %}
