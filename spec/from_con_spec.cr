@@ -130,7 +130,11 @@ describe "from_con" do
   end
 
   it "deserializes union with bool" do
-    Union(Bool, Int64).from_con(%(true)).should be_true
+    Union(Bool, Array(Int64)).from_con(%(true)).should be_true
+  end
+
+  it "deserializes a deep union" do
+    Array(Int64 | Hash(String, Array(Float64))).from_con(%([1 {hello [1.1]}])).should eq([1, {"hello" => [1.1]}])
   end
 
   it "deserializes union with Float64" do

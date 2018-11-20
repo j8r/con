@@ -1,5 +1,6 @@
 require "spec"
 require "big"
+require "json"
 require "../src/to_con"
 require "../src/uuid"
 
@@ -163,5 +164,10 @@ describe "to_pretty_con" do
     it "omit sub-second precision" do
       Time.utc(2016, 11, 16, 12, 55, 48, nanosecond: 123456789).to_con.should eq %("2016-11-16T12:55:48Z")
     end
+  end
+
+  it "JSON::Any#to_con" do
+    any = JSON.parse(%({"key":"value","arr":[1,2]}))
+    any.to_con.should eq(%(key "value" arr [1 2]))
   end
 end

@@ -168,9 +168,15 @@ struct Union
     {% begin %}
      case value
     {% for type in T %}
-    when {{type.id}} then value
+    {% if type.stringify.starts_with? "Array(" %}\
+    when CON::Token::BeginArray then {{type.id}}.from_con value, pull
+    {% elsif type.stringify.starts_with? "Hash(" %}\
+    when CON::Token::BeginHash then {{type.id}}.from_con value, pull
+    {% else %}\
+    when {{type.id}} then  {{type.id}}.from_con value, pull
     {% end %}
-    else pull.type_error value, {{T.join(" | ").id}}
+    {% end %}
+    else pull.expect value, {{T.join(" | ").id}}
     end
     {% end %}
   end

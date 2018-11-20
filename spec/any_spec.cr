@@ -1,5 +1,6 @@
 require "spec"
 require "../src/any"
+require "json"
 
 describe CON::Any do
   describe "casts" do
@@ -170,5 +171,10 @@ describe CON::Any do
     any = CON.parse("[[1] 2 3]")
     any2 = any.clone
     any2.as_a[0].as_a.should_not be(any.as_a[0].as_a)
+  end
+
+  it "to_json" do
+    any = CON.parse(%(key "value" arr [1 2]))
+    any.to_json.should eq(%({"key":"value","arr":[1,2]}))
   end
 end

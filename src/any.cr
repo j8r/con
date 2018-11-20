@@ -1,4 +1,5 @@
 require "./pull_parser"
+require "./builder"
 
 struct CON::Any
   alias Type = Nil | Bool | Int64 | Float64 | String | Array(Any) | Hash(String, Any)
@@ -293,7 +294,7 @@ struct CON::Any
     @raw.to_con con
   end
 
-  def to_json(json : CON::Builder)
+  def to_json(json : JSON::Builder)
     @raw.to_json json
   end
 end
