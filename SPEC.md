@@ -10,7 +10,7 @@ All characters are UTF-8 encoded
 
 ### Delimiters
 
-Delimiters are usd in hashes and arrays to separate elements.
+Delimiters are used in hashes to seprate keys and values, and arrays to separate elements.
 
 At least one of this character is required. They can be chained, any combination is valid:
 - ` `
@@ -20,7 +20,7 @@ At least one of this character is required. They can be chained, any combination
 
 ### Key
 
-A key is separated by its value by a delimiter
+A key is separated by its value with a delimiter
 
 `str "value"`
 
@@ -65,6 +65,18 @@ float 1.1
 float -0.3
 ```
 
+#### Bool
+
+A boolean value can either take `true` or `false`
+
+`enabled true`
+
+#### Nil
+
+`nil` represents the absence of value
+
+`key nil`
+
 #### Array
 
 Arrays consists of elements separated by a delimiter, and enclosed by brackets.
@@ -99,8 +111,3 @@ condensed:
 
 `{inline "value"}`
 
-#### Nil
-
-`nil` represents the absence of value
-
-`key nil`
