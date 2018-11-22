@@ -1,6 +1,8 @@
 require "./lexer.cr"
 
 class CON::PullParser
+  property max_nesting : Int32 = 512
+  @nest = 0
   @lexer : CON::Lexer::FromIO | CON::Lexer::FromString
 
   # Skips all subdata of a key
@@ -67,6 +69,7 @@ class CON::PullParser
   end
 
   def read_array_unchecked(&block)
+    increment_nest
     while true
       case value = @lexer.next_value
       when Token::EndArray            then break
@@ -74,15 +77,19 @@ class CON::PullParser
       else                                 yield value
       end
     end
+    @nest -= 1
   end
 
   def read_array(&block)
+    increment_nest
     expect @lexer.next_value, Token::BeginArray
     yield
     expect @lexer.next_value, Token::EndArray
+    @nest -= 1
   end
 
   def read_hash_unchecked(&block)
+    increment_nest
     while true
       case key = @lexer.next_key
       when String         then yield key
@@ -90,6 +97,7 @@ class CON::PullParser
       else                     expect key, String
       end
     end
+    @nest -= 1
   end
 
   def read_hash(&block)
@@ -103,6 +111,7 @@ class CON::PullParser
     case key = @lexer.next_key
     when Token::BeginHash then read_hash_unchecked { |key| yield key }
     when String
+      increment_nest
       yield key
       while true
         case key = @lexer.next_key
@@ -111,6 +120,7 @@ class CON::PullParser
         else                 expect key, String
         end
       end
+      @nest -= 1
     when Token::EOF then return
     else                 expect key, Union(Token::BeginHash | String | Token::EOF)
     end
@@ -130,6 +140,12 @@ class CON::PullParser
 
   def type_error(value, kind)
     parse_exception "Expected #{kind}, got #{value.class} (#{value.inspect})"
+  end
+
+  private def increment_nest
+    if (@nest += 1) > @max_nesting
+      parse_exception "Nesting of #{@nest} is too deep"
+    end
   end
 
   protected def unexpected_token(token)

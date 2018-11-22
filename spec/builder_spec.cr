@@ -179,4 +179,36 @@ describe CON::Builder do
       end
     end
   end
+
+  it "errors on max nesting (array)" do
+    builder = CON::Builder.new IO::Memory.new
+    builder.max_nesting = 3
+    builder.array do
+      builder.array do
+        builder.array do
+        end
+      end
+    end
+
+    expect_raises(CON::Builder::Error, "Nesting of 4 is too deep") do
+      builder.array do
+      end
+    end
+  end
+
+  it "errors on max nesting (object)" do
+    builder = CON::Builder.new IO::Memory.new
+    builder.max_nesting = 3
+    builder.hash do
+      builder.hash do
+        builder.hash do
+        end
+      end
+    end
+
+    expect_raises(CON::Builder::Error, "Nesting of 4 is too deep") do
+      builder.hash do
+      end
+    end
+  end
 end

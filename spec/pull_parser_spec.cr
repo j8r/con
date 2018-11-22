@@ -64,6 +64,10 @@ describe CON::PullParser do
   assert_pull_parse_error "[[]"
   assert_pull_parse_error %({"foo": {})
 
+  # Prevent too deep nesting (prevents stack overflow)
+  assert_pull_parse_error(("[" * 513) + ("]" * 513))
+  assert_pull_parse_error(("{a" * 513) + ("}" * 513))
+
   describe "skip" do
     [
       {"nil", "nil"},

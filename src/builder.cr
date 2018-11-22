@@ -6,6 +6,8 @@ module CON
     end
 
     getter io : IO
+    property max_nesting : Int32 = 99
+    @nest = 0
     @total_indent : String
     @previous_total_indent : String?
     @indent : String?
@@ -21,7 +23,7 @@ module CON
       @begin_hash = true
     end
 
-    protected def initialize(@io : IO, indent : String?, @total_indent : String)
+    protected def initialize(@io : IO, indent : String?, @total_indent : String, @nest : Int32)
       # Increment the indentation, if any
       if @indent = indent
         @previous_total_indent = @total_indent
@@ -41,7 +43,7 @@ module CON
       end
       key.to_s.to_con_key self
       @io << ' '
-      value.to_con Builder.new(@io, @indent, @total_indent)
+      value.to_con Builder.new(@io, @indent, @total_indent, @nest)
       @io << '\n' if @indent
     end
 
@@ -59,7 +61,7 @@ module CON
       else
         @io << ' '
       end
-      value.to_con Builder.new(@io, @indent, @total_indent)
+      value.to_con Builder.new(@io, @indent, @total_indent, @nest)
     end
 
     private def key(value)
@@ -78,6 +80,7 @@ module CON
     end
 
     def array(&block)
+      increment_nest
       io << '['
       @begin_array = true
       @begin_hash = false
@@ -99,6 +102,7 @@ module CON
     end
 
     def hash(&block)
+      increment_nest
       @begin_hash = true
       if @root_document
         yield
@@ -110,6 +114,12 @@ module CON
         @io << @previous_total_indent << '}'
       end
       @begin_hash = false
+    end
+
+    private def increment_nest
+      if (@nest += 1) > @max_nesting
+        raise CON::Builder::Error.new("Nesting of #{@nest} is too deep")
+      end
     end
   end
 
