@@ -69,17 +69,18 @@ There are benchmarks comparing `CON` and the stdlib's `JSON` implementation
 Some results:
 
 ```
- CON.parse minified 669.91k (  1.49µs) (± 1.74%)  1856 B/op   1.03× slower
-   CON.parse pretty 601.45k (  1.66µs) (± 3.08%)  1856 B/op   1.15× slower
-JSON.parse minified 689.32k (  1.45µs) (± 3.54%)  1698 B/op        fastest
-  JSON.parse pretty 579.35k (  1.73µs) (± 2.01%)  1698 B/op   1.19× slower
+ CON.parse minified 636.54k (  1.57µs) (± 3.02%)  1936 B/op        fastest
+   CON.parse pretty 572.87k (  1.75µs) (± 1.32%)  1936 B/op   1.11× slower
+JSON.parse minified 562.57k (  1.78µs) (± 1.80%)  2128 B/op   1.13× slower
+  JSON.parse pretty 477.41k (  2.09µs) (± 3.85%)  2128 B/op   1.33× slower
 ```
 
 ```
- CON::Builder minified   1.71M ( 585.7ns) (± 4.46%)  176 B/op        fastest
-   CON::Builder pretty   1.06M (947.45ns) (± 2.34%)  608 B/op   1.62× slower
-JSON::Builder minified   1.15M ( 872.4ns) (± 5.67%)  576 B/op   1.49× slower
-  JSON::Builder pretty 889.92k (  1.12µs) (± 1.79%)  849 B/op   1.92× slower
+ CON::Builder minified   1.24M (807.52ns) (± 2.04%)   320 B/op        fastest
+   CON::Builder pretty 674.25k (  1.48µs) (±19.03%)  1057 B/op   1.84× slower
+JSON::Builder minified 853.06k (  1.17µs) (± 7.70%)   576 B/op   1.45× slower
+  JSON::Builder pretty 703.44k (  1.42µs) (± 6.03%)   848 B/op   1.76× slower
+
 ```
 
 ## License

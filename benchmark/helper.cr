@@ -2,7 +2,7 @@ require "benchmark"
 
 DATA = {
   key:  "value",
-  num:  1,
+  num:  123,
   pi:   3.14,
   hash: {
     sub: "key",
@@ -12,4 +12,5 @@ DATA = {
     false,
     nil,
   },
+  kelvin: -273.15,
 }

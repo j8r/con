@@ -47,19 +47,18 @@ struct CON::Lexer::FromString
       when '\0' then return Token::EOF
       end
     end
-
-    @string_pool.get(@reader.string.to_unsafe + start_pos, @reader.pos - start_pos - 1)
+    string_range(start_pos, @reader.pos - 1)
   end
 
   private def consume_key
     start_pos = @reader.pos
     while true
       case @current_char
+      when ' ', '\n', '\t', '\r', '[', '{' then break
       when '\\'
         @buffer.write slice_range(start_pos, @reader.pos)
         return consume_key_with_buffer
-      when ' ', '\n', '\t', '\r', '[', '{' then break
-      when '\0'                            then return Token::EOF
+      when '\0' then return Token::EOF
       end
       next_char
     end

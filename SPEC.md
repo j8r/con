@@ -109,5 +109,4 @@ hash {
 
 condensed:
 
-`{inline "value"}`
-
+`hash{key "value" other "val"}` or `{hash{key "value" other "val"}}`

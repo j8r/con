@@ -62,23 +62,26 @@ module CON::Lexer::Main
 
   def next_value : Type | CON::Token
     skip_whitespaces_and_comments
+    @buffer.clear
     case @current_char
-    when '"'                                                   then next_char; consume_string
-    when '['                                                   then next_char; Token::BeginArray
-    when ']'                                                   then next_char; Token::EndArray
-    when '{'                                                   then next_char; Token::BeginHash
-    when '}'                                                   then next_char; Token::EndHash
-    when 't'                                                   then consume_true
-    when 'f'                                                   then consume_false
-    when 'n'                                                   then consume_nil
-    when '\0'                                                  then Token::EOF
-    when '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' then consume_int
-    else                                                            raise "Unknown char: '#{@current_char}'"
+    when '"'      then next_char; consume_string
+    when '['      then next_char; Token::BeginArray
+    when ']'      then next_char; Token::EndArray
+    when '{'      then next_char; Token::BeginHash
+    when '}'      then next_char; Token::EndHash
+    when 't'      then consume_true
+    when 'f'      then consume_false
+    when 'n'      then consume_nil
+    when '-'      then consume_int(negative: true)
+    when '0'..'9' then consume_int
+    when '\0'     then Token::EOF
+    else               raise "Unknown char: '#{@current_char}'"
     end
   end
 
   def next_key : String | Nil | CON::Token
     skip_whitespaces_and_comments
+    @buffer.clear
     case @current_char
     when '{'  then next_char; return Token::BeginHash
     when '}'  then next_char; return Token::EndHash
@@ -93,8 +96,8 @@ module CON::Lexer::Main
   private def consume_key_with_buffer
     while true
       case @current_char
+      when ' ', '\n', '\t', '\r', '[', '{' then return @string_pool.get(@buffer)
       when '\\'                            then consume_escape
-      when ' ', '\n', '\t', '\r', '[', '{' then return build_string
       when '\0'                            then return Token::EOF
       else                                      @buffer << @current_char
       end
@@ -105,8 +108,8 @@ module CON::Lexer::Main
   private def consume_string_with_buffer
     while true
       case @current_char
+      when '"'  then next_char; return @buffer.to_s
       when '\\' then consume_escape
-      when '"'  then next_char; return build_string
       when '\0' then return Token::EOF
       else           @buffer << @current_char
       end
@@ -114,26 +117,53 @@ module CON::Lexer::Main
     end
   end
 
-  private def consume_float
-    @buffer << @current_char
+  private def consume_float(integer : Int64, digits : Int32) : Float64
+    divisor = 1_i64
     while next_char
       case @current_char
-      when '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' then @buffer << @current_char
-      when '\0', ' ', '\n', '\t', '\r', '[', ']', '{', '}'  then @nobuffer ? return : return build_string.to_f64
-      else                                                       unexpected_char "float"
+      when '0'..'9'
+        if !@nobuffer
+          integer *= 10
+          integer += @current_char - '0'
+          divisor *= 10
+          digits += 1
+          @buffer << @current_char
+        end
+      when '\0', ' ', '\n', '\t', '\r', '[', ']', '{', '}' then break
+      else                                                      unexpected_char "float"
       end
+    end
+    if digits > 17
+      return @buffer.to_s.to_f64
+    else
+      return integer.to_f64 / divisor
     end
   end
 
-  private def consume_int
-    @buffer << @current_char
+  private def consume_int(negative : Bool = false) : Int64 | Float64
+    digits = 0
+    integer = negative ? 0_i64 : (@current_char - '0').to_i64
+    @buffer << @current_char if !@nobuffer
     while next_char
       case @current_char
-      when '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' then @buffer << @current_char
-      when '\0', ' ', '\n', '\t', '\r', '[', ']', '{', '}'  then @nobuffer ? return : return build_string.to_i64
-      when '.'                                              then return consume_float
-      else                                                       unexpected_char "int"
+      when '0'..'9'
+        if !@nobuffer
+          integer *= 10
+          integer += @current_char - '0'
+          digits += 1
+          @buffer << @current_char
+        end
+      when '\0', ' ', '\n', '\t', '\r', '[', ']', '{', '}' then break
+      when '.'
+        @buffer << @current_char if !@nobuffer
+        return (negative ? -consume_float(integer, digits) : consume_float(integer, digits))
+      else unexpected_char "int"
       end
+    end
+    if digits > 17
+      @buffer.to_s.to_i64
+    else
+      return (negative ? -integer : integer)
     end
   end
 
@@ -146,12 +176,6 @@ module CON::Lexer::Main
     when 't' then '\t'
     else          @current_char
     end
-  end
-
-  private def build_string : String
-    string = @string_pool.get(@buffer)
-    @buffer.clear
-    string
   end
 
   private def skip_whitespaces_and_comments
