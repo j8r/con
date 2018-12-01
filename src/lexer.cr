@@ -63,7 +63,7 @@ module CON::Lexer::Main
   def next_value : Type | CON::Token
     skip_whitespaces_and_comments
     @buffer.clear
-    case @current_char
+    value = case @current_char
     when '"'      then next_char; consume_string
     when '['      then next_char; Token::BeginArray
     when ']'      then next_char; Token::EndArray
@@ -77,6 +77,8 @@ module CON::Lexer::Main
     when '\0'     then Token::EOF
     else               raise "Unknown char: '#{@current_char}'"
     end
+    @column_number = 1
+    value
   end
 
   def next_key : String | Nil | CON::Token
@@ -89,7 +91,6 @@ module CON::Lexer::Main
     when ']'  then next_char; return Token::EndArray
     when '\0' then return Token::EOF
     end
-    @column_number = 1
     consume_key
   end
 
