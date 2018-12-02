@@ -104,11 +104,16 @@ describe CON::Builder do
     end
   end
 
-  it "writes hash with indent" do
-    assert_built(%<  foo 1\n  bar 2\n>, "  ") do |con|
+  it "writes nested hash with indent" do
+    assert_built(%<foo 1\nbar {\n  foobar 2\n  sub {\n    key nil\n  }\n}\n>, "  ") do |con|
       hash do
         field "foo", 1
-        field "bar", 2
+        hash "bar" do
+          field "foobar", 2
+          hash "sub" do
+            field "key", nil
+          end
+        end
       end
     end
   end
@@ -127,8 +132,8 @@ describe CON::Builder do
     end
   end
 
-  it "writes nested array" do
-    assert_built(%<[[\n]\n]>, "  ") do |con|
+  it "writes nested array with indent" do
+    assert_built(%<[[\n  ]\n]>, "  ") do |con|
       array do
         array do
         end
@@ -136,9 +141,9 @@ describe CON::Builder do
     end
   end
 
-  it "writes hash with array and indent" do
-    assert_built(%<foo {\n[\n  1\n]\n}>, "  ") do |con|
-      hash "foo" do
+  it "writes document with array and indent" do
+    assert_built(%<[\n  1\n]>, "  ") do |con|
+      hash do
         array do
           value 1
         end
@@ -199,15 +204,15 @@ describe CON::Builder do
   it "errors on max nesting (object)" do
     builder = CON::Builder.new IO::Memory.new
     builder.max_nesting = 3
-    builder.hash do
-      builder.hash do
-        builder.hash do
+    builder.hash "a" do
+      builder.hash "a" do
+        builder.hash "a" do
         end
       end
     end
 
     expect_raises(CON::Builder::Error, "Nesting of 4 is too deep") do
-      builder.hash do
+      builder.hash "a" do
       end
     end
   end

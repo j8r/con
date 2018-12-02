@@ -7,35 +7,26 @@ module CON
 
     getter io : IO
     property max_nesting : Int32 = 99
-    @nest = 0
-    @total_indent : String
-    @previous_total_indent : String?
+    @nest : Int32 = 0
     @indent : String?
     @root_document = false
     @begin_hash = false
     @begin_array = false
 
     def initialize(@io : IO, @indent : String? = nil)
-      @total_indent = @indent || ""
-      @previous_total_indent = nil
       # Not needed at the start/end of a document
       @root_document = true
       @begin_hash = true
     end
 
-    protected def initialize(@io : IO, indent : String?, @total_indent : String, @nest : Int32)
-      # Increment the indentation, if any
-      if @indent = indent
-        @previous_total_indent = @total_indent
-        @total_indent += indent
-      end
+    protected def initialize(@io : IO, @indent : String?, @nest)
     end
 
     def field(key, value)
       if @begin_array
         raise CON::Builder::Error.new("Can't use field inside an array")
       elsif @indent
-        @io << @total_indent
+        add_indent
       elsif @begin_hash
         @begin_hash = false
       else
@@ -43,16 +34,16 @@ module CON
       end
       key.to_s.to_con_key self
       @io << ' '
-      value.to_con Builder.new(@io, @indent, @total_indent, @nest)
+      value.to_con Builder.new(@io, @indent, @nest)
       @io << '\n' if @indent
     end
 
     def value(value)
       if @begin_hash && !@root_document
         raise CON::Builder::Error.new("Can't use value inside a hash")
-      elsif indent = @indent
-        @total_indent = indent if @total_indent.empty?
-        io << '\n' << @total_indent
+      elsif @indent
+        io << '\n'
+        add_indent
       elsif @root_document
         @begin_hash = true
         @root_document = false
@@ -61,13 +52,13 @@ module CON
       else
         @io << ' '
       end
-      value.to_con Builder.new(@io, @indent, @total_indent, @nest)
+      value.to_con Builder.new(@io, @indent, @nest)
     end
 
     private def key(value)
-      if @previous_total_indent
-        @io << '\n' << @previous_total_indent
-      elsif !@indent && !@begin_hash && !@begin_array
+      if @indent
+        add_indent
+      elsif !@begin_hash && !@begin_array
         @io << ' '
       end
       value.to_con_key self
@@ -80,16 +71,22 @@ module CON
     end
 
     def array(&block)
-      increment_nest
+      array_nest = @nest
       io << '['
+      increment_nest
       @begin_array = true
       @begin_hash = false
       previous_root_document = @root_document
       @root_document = false
       yield
       @root_document = previous_root_document
-      io << '\n' if @indent
-      io << @previous_total_indent << ']'
+      if @indent
+        @io << '\n'
+        array_nest.times do
+          @io << @indent
+        end
+      end
+      @io << ']'
     end
 
     def hash(key : String, &block)
@@ -102,16 +99,22 @@ module CON
     end
 
     def hash(&block)
-      increment_nest
       @begin_hash = true
       if @root_document
         yield
       else
+        hash_nest = @nest
+        increment_nest
         @io << '{'
         @io << '\n' if @indent
         yield
+        if @indent
+          hash_nest.times do
+            @io << @indent
+          end
+        end
+        @io << '}'
         @io << '\n' if @indent
-        @io << @previous_total_indent << '}'
       end
       @begin_hash = false
     end
@@ -119,6 +122,18 @@ module CON
     private def increment_nest
       if (@nest += 1) > @max_nesting
         raise CON::Builder::Error.new("Nesting of #{@nest} is too deep")
+      end
+    end
+
+    private def add_indent
+      @nest.times do
+        @io << @indent
+      end
+    end
+
+    private def add_previous_indent
+      (@nest - 1).times do
+        @io << @indent
       end
     end
   end
