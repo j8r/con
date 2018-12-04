@@ -25,9 +25,9 @@ A key is separated by its value with a delimiter
 `str "value"`
 
 This characters need to be escaped, in addition to delimiters:
-- `\\`
 - `\b`
 - `\f`
+- `\`
 - `[`
 - `]`
 - `{`
@@ -42,10 +42,10 @@ Strings are enclosed with two quotes
 `"value"`
 
 This characters need to be escaped, in addition to delimiters:
-- `\\`
-- `\"`
 - `\b`
 - `\f`
+- `\`
+- `"`
 
 #### Integer
 
