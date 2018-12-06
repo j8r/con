@@ -133,7 +133,7 @@ describe "to_pretty_con" do
   end
 
   it "does for empty Array" do
-    ([] of Nil).to_pretty_con.should eq "[\n]"
+    ([] of Nil).to_pretty_con.should eq "[\n  \n]"
   end
 
   it "does for Hash" do

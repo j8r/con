@@ -41,14 +41,14 @@ module CON
     def value(value)
       if @begin_hash && !@root_document
         raise CON::Builder::Error.new("Can't use value inside a hash")
+      elsif @begin_array
+        @begin_array = false
       elsif @indent
         io << '\n'
         add_indent
       elsif @root_document
         @begin_hash = true
         @root_document = false
-      elsif @begin_array
-        @begin_array = false
       else
         @io << ' '
       end
@@ -74,6 +74,10 @@ module CON
       array_nest = @nest
       io << '['
       increment_nest
+      if @indent
+        @io << '\n'
+        add_indent
+      end
       @begin_array = true
       @begin_hash = false
       previous_root_document = @root_document

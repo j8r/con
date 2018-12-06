@@ -118,13 +118,6 @@ describe CON::Builder do
     end
   end
 
-  it "writes empty array with indent" do
-    assert_built(%<[\n]>, "  ") do |con|
-      array do
-      end
-    end
-  end
-
   it "writes empty hash with indent" do
     assert_built(%<>, "  ") do |con|
       hash do
@@ -132,8 +125,15 @@ describe CON::Builder do
     end
   end
 
-  it "writes nested array with indent" do
-    assert_built(%<[[\n  ]\n]>, "  ") do |con|
+  it "writes empty array with indent" do
+    assert_built(%<[\n  \n]>, "  ") do |con|
+      array do
+      end
+    end
+  end
+
+  it "writes nested empty arrays with indent" do
+    assert_built(%<[\n  [\n    \n  ]\n]>, "  ") do |con|
       array do
         array do
         end
