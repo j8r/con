@@ -84,4 +84,4 @@ JSON.parse minified 322.33k (   3.1µs) (± 3.63%)  2129 B/op   1.25× slower
 
 ## License
 
-Copyright (c) 2018 Julien Reichardt - ISC License
+Copyright (c) 2018-2019 Julien Reichardt - ISC License
