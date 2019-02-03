@@ -41,6 +41,7 @@ describe CON::Lexer::Main do
   it_lexes_value "true", true
   it_lexes_value "false", false
   it_lexes_value "nil", nil
+  it_lexes_value "\"\"", ""
   it_lexes_value "\"hello\"", "hello"
   it_lexes_value "\"hello\\\"world\"", "hello\"world"
   it_lexes_value "\"hello\\\\world\"", "hello\\world"

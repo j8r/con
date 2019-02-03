@@ -38,7 +38,7 @@ struct CON::Lexer::FromString
   # to build the resulting string.
   private def consume_string
     start_pos = @reader.pos
-    while next_char
+    while true
       case @current_char
       when '\\'
         @buffer.write slice_range(start_pos, @reader.pos)
@@ -46,6 +46,8 @@ struct CON::Lexer::FromString
       when '"'  then next_char; break
       when '\0' then return Token::EOF
       end
+
+      next_char
     end
     string_range(start_pos, @reader.pos - 1)
   end

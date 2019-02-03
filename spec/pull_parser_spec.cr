@@ -51,6 +51,7 @@ describe CON::PullParser do
   assert_pull_parse_skip_value "{}"
   assert_pull_parse_skip_value %({foo 1})
   assert_pull_parse_skip_value %({foo "bar"})
+  assert_pull_parse_skip_value %({foo ""})
   assert_pull_parse_skip_value %({foo [1 2]})
   assert_pull_parse_skip_value %({foo 1 bar 2})
   assert_pull_parse_skip_value %({foo "foo1" bar "bar1"})
