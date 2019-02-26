@@ -24,7 +24,7 @@ module CON
 
     def field(key, value)
       if @begin_array
-        raise CON::Builder::Error.new("Can't use field inside an array")
+        raise Error.new("Can't use field inside an array")
       elsif @indent
         add_indent
       elsif @begin_hash
@@ -40,7 +40,7 @@ module CON
 
     def value(value)
       if @begin_hash && !@root_document
-        raise CON::Builder::Error.new("Can't use value inside a hash")
+        raise Error.new("Can't use value inside a hash")
       elsif @begin_array
         @begin_array = false
       elsif @indent
@@ -131,12 +131,6 @@ module CON
 
     private def add_indent
       @nest.times do
-        @io << @indent
-      end
-    end
-
-    private def add_previous_indent
-      (@nest - 1).times do
         @io << @indent
       end
     end
