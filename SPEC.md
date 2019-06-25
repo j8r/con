@@ -58,7 +58,7 @@ neg -2
 
 #### Float
 
-FLoats are signed and 64-bit by default
+Floats are signed and 64-bit by default
 
 ```
 float 1.1
