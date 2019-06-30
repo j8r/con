@@ -1,11 +1,5 @@
 require "string_pool"
 
-class StringPool
-  def get(null)
-    ""
-  end
-end
-
 module CON
   alias Type = Bool | Float64 | Int64 | String | Nil
 
@@ -37,32 +31,19 @@ module CON
 end
 
 module CON::Lexer::Main
-  struct Null
-    def <<(value)
-    end
-
-    def clear
-    end
-
-    def write(slice)
-      raise "Can't write to a buffer when nobufferping"
-    end
-  end
-
-  @buffer : IO::Memory | Null = IO::Memory.new
+  @buffer : IO::Memory? = IO::Memory.new
   @string_pool = StringPool.new
   getter line_number = 1
   getter column_number = 1
   getter current_char : Char
-  getter nobuffer : Bool = false
 
-  def nobuffer=(@nobuffer : Bool)
-    @buffer = @nobuffer ? Null.new : IO::Memory.new
+  def nobuffer=(nobuffer : Bool)
+    @buffer = nobuffer ? nil : IO::Memory.new
   end
 
   def next_value : Type | CON::Token
     skip_whitespaces_and_comments
-    @buffer.clear
+    @buffer.try &.clear
     value = case @current_char
             when '"'      then next_char; consume_string
             when '['      then next_char; Token::BeginArray
@@ -83,7 +64,7 @@ module CON::Lexer::Main
 
   def next_key : String | Nil | CON::Token
     skip_whitespaces_and_comments
-    @buffer.clear
+    @buffer.try &.clear
     case @current_char
     when '{'  then next_char; return Token::BeginHash
     when '}'  then next_char; return Token::EndHash
@@ -97,10 +78,13 @@ module CON::Lexer::Main
   private def consume_key_with_buffer
     while true
       case @current_char
-      when ' ', '\n', '\t', '\r', '[', '{' then return @string_pool.get(@buffer)
-      when '\\'                            then consume_escape
-      when '\0'                            then return Token::EOF
-      else                                      @buffer << @current_char
+      when ' ', '\n', '\t', '\r', '[', '{'
+        if buffer = @buffer
+          return @string_pool.get(buffer)
+        end
+      when '\\' then consume_escape
+      when '\0' then return Token::EOF
+      else           @buffer.try &.<< @current_char
       end
       next_char
     end
@@ -109,10 +93,10 @@ module CON::Lexer::Main
   private def consume_string_with_buffer
     while true
       case @current_char
-      when '"'  then next_char; return @buffer.to_s
+      when '"'  then next_char; return @buffer.try &.to_s
       when '\\' then consume_escape
       when '\0' then return Token::EOF
-      else           @buffer << @current_char
+      else           @buffer.try &.<< @current_char
       end
       next_char
     end
@@ -123,53 +107,53 @@ module CON::Lexer::Main
     while next_char
       case @current_char
       when '0'..'9'
-        if !@nobuffer
+        if buffer = @buffer
           integer *= 10
           integer += @current_char - '0'
           divisor *= 10
           digits += 1
-          @buffer << @current_char
+          buffer << @current_char
         end
       when '\0', ' ', '\n', '\t', '\r', '[', ']', '{', '}' then break
       else                                                      unexpected_char "float"
       end
     end
-    if digits > 17
-      return @buffer.to_s.to_f64
+    if digits > 17 && (buffer = @buffer)
+      buffer.to_s.to_f64
     else
-      return integer.to_f64 / divisor
+      integer.to_f64 / divisor
     end
   end
 
   private def consume_int(negative : Bool = false) : Int64 | Float64
     digits = 0
     integer = negative ? 0_i64 : (@current_char - '0').to_i64
-    @buffer << @current_char if !@nobuffer
+    @buffer.try &.<< @current_char
     while next_char
       case @current_char
       when '0'..'9'
-        if !@nobuffer
+        if buffer = @buffer
           integer *= 10
           integer += @current_char - '0'
           digits += 1
-          @buffer << @current_char
+          buffer << @current_char
         end
       when '\0', ' ', '\n', '\t', '\r', '[', ']', '{', '}' then break
       when '.'
-        @buffer << @current_char if !@nobuffer
+        @buffer.try &.<< @current_char
         return (negative ? -consume_float(integer, digits) : consume_float(integer, digits))
       else unexpected_char "int"
       end
     end
-    if digits > 17
-      @buffer.to_s.to_i64
+    if digits > 17 && (buffer = @buffer)
+      buffer.to_s.to_i64
     else
-      return (negative ? -integer : integer)
+      negative ? -integer : integer
     end
   end
 
   private def consume_escape
-    @buffer << case next_char
+    @buffer.try &.<< case next_char
     when 'b' then '\b'
     when 'f' then '\f'
     when 'n' then '\n'

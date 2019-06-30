@@ -41,7 +41,7 @@ struct CON::Lexer::FromString
     while true
       case @current_char
       when '\\'
-        @buffer.write slice_range(start_pos, @reader.pos)
+        @buffer.try &.write slice_range(start_pos, @reader.pos)
         return consume_string_with_buffer
       when '"'  then next_char; break
       when '\0' then return Token::EOF
@@ -58,7 +58,7 @@ struct CON::Lexer::FromString
       case @current_char
       when ' ', '\n', '\t', '\r', '[', '{' then break
       when '\\'
-        @buffer.write slice_range(start_pos, @reader.pos)
+        @buffer.try &.write slice_range(start_pos, @reader.pos)
         return consume_key_with_buffer
       when '\0' then return Token::EOF
       end

@@ -131,10 +131,10 @@ class CON::PullParser
     value
   end
 
-  macro expect(value, kind)
-    case %value = {{value}}
-    when {{kind}}   then %value
-    else                 type_error %value, {{kind}}
+  def expect(value, kind)
+    case value
+    when kind then value
+    else           type_error value, kind
     end
   end
 
