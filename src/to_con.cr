@@ -134,7 +134,7 @@ end
 
 class Hash
   def to_con(con : CON::Builder)
-    con.hash do
+    con.hash(new_line: false) do
       each do |key, value|
         con.field key, value
       end
@@ -154,7 +154,7 @@ end
 
 struct NamedTuple
   def to_con(con : CON::Builder)
-    con.hash do
+    con.hash(new_line: false) do
       {% for key in T.keys %}
         con.field({{key.stringify}}, self[{{key.symbolize}}])
       {% end %}

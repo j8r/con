@@ -7,6 +7,7 @@ module CON
 
     getter io : IO
     property max_nesting : Int32 = 99
+    getter newline = false
     @nest : Int32 = 0
     @indent : String?
     @root_document = false
@@ -102,7 +103,7 @@ module CON
       @root_document = previous_root_document
     end
 
-    def hash(&block)
+    def hash(new_line : Bool = true, &block)
       @begin_hash = true
       if @root_document
         yield
@@ -118,7 +119,7 @@ module CON
           end
         end
         @io << '}'
-        @io << '\n' if @indent
+        @io << '\n' if @indent && new_line
       end
       @begin_hash = false
     end

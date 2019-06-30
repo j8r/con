@@ -106,13 +106,11 @@ describe CON::Builder do
 
   it "writes nested hash with indent" do
     assert_built(%<foo 1\nbar {\n  foobar 2\n  sub {\n    key nil\n  }\n}\n>, "  ") do |con|
-      hash do
-        field "foo", 1
-        hash "bar" do
-          field "foobar", 2
-          hash "sub" do
-            field "key", nil
-          end
+      field "foo", 1
+      hash "bar" do
+        field "foobar", 2
+        hash "sub" do
+          field "key", nil
         end
       end
     end

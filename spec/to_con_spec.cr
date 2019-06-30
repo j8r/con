@@ -141,7 +141,7 @@ describe "to_pretty_con" do
   end
 
   it "does for nested Hash" do
-    {"foo" => {"bar" => 1}}.to_pretty_con.should eq "foo {\n  bar 1\n}\n\n"
+    {"foo" => {"bar" => 1}}.to_pretty_con.should eq "foo {\n  bar 1\n}\n"
   end
 
   it "does for empty Hash" do
@@ -153,7 +153,7 @@ describe "to_pretty_con" do
   end
 
   it "does for nested Hash with indent" do
-    {"foo" => {"bar" => 1}}.to_pretty_con(indent: " ").should eq "foo {\n bar 1\n}\n\n"
+    {"foo" => {"bar" => 1}}.to_pretty_con(indent: " ").should eq "foo {\n bar 1\n}\n"
   end
 
   describe "Time" do
