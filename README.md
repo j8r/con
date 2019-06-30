@@ -1,8 +1,11 @@
 # CON
 
+[![Build Status](https://cloud.drone.io/api/badges/j8r/con/status.svg)](https://cloud.drone.io/j8r/con)
+[![ISC](https://img.shields.io/badge/License-ISC-blue.svg?style=flat-square)](https://en.wikipedia.org/wiki/ISC_license)
+
 Cretin Object Notation - a simple, fast and readable JSON-compatible serialization format
 
-**WORK IN PROGRESS** - the specifications aren't stable and will change
+The specifications is mostly stable, but can be subject to minor changes.
 
 ## Example
 
