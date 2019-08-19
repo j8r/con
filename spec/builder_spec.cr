@@ -124,8 +124,9 @@ describe CON::Builder do
   end
 
   it "writes empty array with indent" do
-    assert_built(%<[\n  \n]>, "  ") do |con|
+    assert_built(%<[\n  1\n]>, "  ") do |con|
       array do
+        value 1
       end
     end
   end
@@ -139,11 +140,11 @@ describe CON::Builder do
     end
   end
 
-  it "writes document with array and indent" do
-    assert_built(%<[\n  1\n]>, "  ") do |con|
-      hash do
-        array do
-          value 1
+  it "errors when writing array inside hash" do
+    expect_raises(CON::Builder::Error, "Can't use array inside a hash") do
+      builder = CON::Builder.new IO::Memory.new
+      builder.hash do
+        builder.array do
         end
       end
     end

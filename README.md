@@ -72,17 +72,17 @@ There are benchmarks comparing `CON` and the stdlib's `JSON` implementation
 Some results:
 
 ```
- CON.parse minified 403.83k (  2.48µs) (± 4.67%)  1937 B/op        fastest
-   CON.parse pretty 383.93k (   2.6µs) (± 3.35%)  1936 B/op   1.05× slower
-JSON.parse minified 322.33k (   3.1µs) (± 3.63%)  2129 B/op   1.25× slower
-  JSON.parse pretty  277.7k (   3.6µs) (± 3.82%)  2129 B/op   1.45× slower
+ CON.parse minified 527.25k (  1.90µs) (±13.77%)  1.88kB/op        fastest
+   CON.parse pretty 501.42k (  1.99µs) (±15.08%)  1.88kB/op   1.05× slower
+JSON.parse minified 487.52k (  2.05µs) (± 9.05%)  2.08kB/op   1.08× slower
+  JSON.parse pretty 409.80k (  2.44µs) (± 9.13%)  2.08kB/op   1.29× slower
 ```
 
 ```
-        #to_con 896.16k (  1.12µs) (± 5.23%)  321 B/op        fastest
- #to_pretty_con  865.9k (  1.15µs) (± 1.93%)  321 B/op   1.03× slower
-       #to_json 644.32k (  1.55µs) (± 2.49%)  578 B/op   1.39× slower
-#to_pretty_json 515.68k (  1.94µs) (± 2.28%)  849 B/op   1.74× slower
+        #to_con   1.17M (852.99ns) (± 3.51%)  320B/op        fastest
+ #to_pretty_con   1.10M (908.96ns) (± 5.76%)  320B/op   1.07× slower
+       #to_json 742.97k (  1.35µs) (±14.52%)  576B/op   1.58× slower
+#to_pretty_json 612.21k (  1.63µs) (±13.04%)  848B/op   1.91× slower
 ```
 
 ## License
