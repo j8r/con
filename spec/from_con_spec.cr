@@ -61,6 +61,18 @@ describe "from_con" do
     tuple.should be_a(NamedTuple(x: Int32, y: String))
   end
 
+  it "does for named tuple with nilable fields" do
+    tuple = NamedTuple(x: Int32?, y: String).from_con(%(y "hello"))
+    tuple.should eq({x: nil, y: "hello"})
+    tuple.should be_a(NamedTuple(x: Int32?, y: String))
+  end
+
+  it "does for named tuple with nilable fields and null" do
+    tuple = NamedTuple(x: Int32?, y: String).from_con(%(y "hello" x nil))
+    tuple.should eq({x: nil, y: "hello"})
+    tuple.should be_a(NamedTuple(x: Int32?, y: String))
+  end
+
   it "does for BigInt" do
     big = BigInt.from_con("\"123456789123456789123456789123456789123456789\"")
     big.should be_a(BigInt)

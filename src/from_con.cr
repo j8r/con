@@ -100,6 +100,7 @@ struct NamedTuple
     {% begin %}
     {% for key in T.keys %}
       %var{key.id} = nil
+      %found{key.id} = false
     {% end %}
 
     pull.read_document do |key|
@@ -107,21 +108,22 @@ struct NamedTuple
         {% for key, type in T %}
           when {{key.stringify}}
             %var{key.id} = {{type}}.from_con(pull)
+            %found{key.id} = true
         {% end %}
       else
         pull.skip_value
       end
     end
 
-    {% for key in T.keys %}
-      if %var{key.id}.nil?
+    {% for key, type in T %}
+      if %var{key.id}.nil? && !%found{key.id} && !{{type.nilable?}}
         pull.type_error %var{key.id}, CON::Type
       end
     {% end %}
 
     {
-      {% for key in T.keys %}
-        {{key}}: %var{key.id},
+      {% for key, type in T %}
+        {{key}}: (%var{key.id}.as({{type}})),
       {% end %}
     }
     {% end %}
