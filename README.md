@@ -29,6 +29,10 @@ ports [
 - Easy to read, fast to parse
 - Simple specifications
 
+## Documentation
+
+https://j8r.github.io/con
+
 ## Specifications
 
 Specification document: [SPEC.md](SPEC.md)
