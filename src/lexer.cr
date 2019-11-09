@@ -108,9 +108,9 @@ module CON::Lexer::Main
       case @current_char
       when '0'..'9'
         if buffer = @buffer
-          integer *= 10
-          integer += @current_char - '0'
-          divisor *= 10
+          integer &*= 10
+          integer &+= @current_char - '0'
+          divisor &*= 10
           digits += 1
           buffer << @current_char
         end
@@ -133,8 +133,8 @@ module CON::Lexer::Main
       case @current_char
       when '0'..'9'
         if buffer = @buffer
-          integer *= 10
-          integer += @current_char - '0'
+          integer &*= 10
+          integer &+= @current_char - '0'
           digits += 1
           buffer << @current_char
         end
