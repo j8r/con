@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.30.1">
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="../js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "../";
+</script>
+
+  <meta id="repository-name" content="github.com/j8r/con">
+  <title>CON::PullParser - github.com/j8r/con</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../index.html">README</a>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="github.com/j8r/con/Array" data-name="array(t)">
+      <a href="../Array.html">Array</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/BigDecimal" data-name="bigdecimal">
+      <a href="../BigDecimal.html">BigDecimal</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/BigFloat" data-name="bigfloat">
+      <a href="../BigFloat.html">BigFloat</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/BigInt" data-name="bigint">
+      <a href="../BigInt.html">BigInt</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Bool" data-name="bool">
+      <a href="../Bool.html">Bool</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="github.com/j8r/con/CON" data-name="con">
+      <a href="../CON.html">CON</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="github.com/j8r/con/CON/Any" data-name="con::any">
+      <a href="../CON/Any.html">Any</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Any/Type" data-name="con::any::type">
+      <a href="../CON/Any/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/j8r/con/CON/Builder" data-name="con::builder">
+      <a href="../CON/Builder.html">Builder</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Builder/Error" data-name="con::builder::error">
+      <a href="../CON/Builder/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Error" data-name="con::error">
+      <a href="../CON/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/j8r/con/CON/Lexer" data-name="con::lexer">
+      <a href="../CON/Lexer.html">Lexer</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Lexer/FromIO" data-name="con::lexer::fromio">
+      <a href="../CON/Lexer/FromIO.html">FromIO</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Lexer/FromString" data-name="con::lexer::fromstring">
+      <a href="../CON/Lexer/FromString.html">FromString</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Lexer/Main" data-name="con::lexer::main">
+      <a href="../CON/Lexer/Main.html">Main</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/ParseException" data-name="con::parseexception">
+      <a href="../CON/ParseException.html">ParseException</a>
+      
+    </li>
+  
+  <li class=" current" data-id="github.com/j8r/con/CON/PullParser" data-name="con::pullparser">
+      <a href="../CON/PullParser.html">PullParser</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Token" data-name="con::token">
+      <a href="../CON/Token.html">Token</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Type" data-name="con::type">
+      <a href="../CON/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Enum" data-name="enum">
+      <a href="../Enum.html">Enum</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Float" data-name="float">
+      <a href="../Float.html">Float</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Hash" data-name="hash(k, v)">
+      <a href="../Hash.html">Hash</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Int" data-name="int">
+      <a href="../Int.html">Int</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/j8r/con/JSON" data-name="json">
+      <a href="../JSON.html">JSON</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/j8r/con/JSON/Any" data-name="json::any">
+      <a href="../JSON/Any.html">Any</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/NamedTuple" data-name="namedtuple(**t)">
+      <a href="../NamedTuple.html">NamedTuple</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Nil" data-name="nil">
+      <a href="../Nil.html">Nil</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Object" data-name="object">
+      <a href="../Object.html">Object</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Reference" data-name="reference">
+      <a href="../Reference.html">Reference</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Regex" data-name="regex">
+      <a href="../Regex.html">Regex</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Set" data-name="set(t)">
+      <a href="../Set.html">Set</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/String" data-name="string">
+      <a href="../String.html">String</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Symbol" data-name="symbol">
+      <a href="../Symbol.html">Symbol</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/j8r/con/Time" data-name="time">
+      <a href="../Time.html">Time</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/j8r/con/Time/EpochConverter" data-name="time::epochconverter">
+      <a href="../Time/EpochConverter.html">EpochConverter</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Time/EpochMillisConverter" data-name="time::epochmillisconverter">
+      <a href="../Time/EpochMillisConverter.html">EpochMillisConverter</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Time/Format" data-name="time::format">
+      <a href="../Time/Format.html">Format</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Tuple" data-name="tuple(*t)">
+      <a href="../Tuple.html">Tuple</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Union" data-name="union(*t)">
+      <a href="../Union.html">Union</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/UUID" data-name="uuid">
+      <a href="../UUID.html">UUID</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Value" data-name="value">
+      <a href="../Value.html">Value</a>
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> CON::PullParser
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../CON/PullParser.html">CON::PullParser</a></li><li class="superclass"><a href="../Reference.html">Reference</a></li><li class="superclass"><a href="../Object.html">Object</a></li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L3" target="_blank">
+        pull_parser.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>Constructors</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new(string:String)-class-method" class="signature"><strong>.new</strong>(string : String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new(io:IO)-class-method" class="signature"><strong>.new</strong>(io : IO)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#column_number:Int32-instance-method" class="signature"><strong>#column_number</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#expect(value,kind)-instance-method" class="signature"><strong>#expect</strong>(value, kind)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#expect(value,kind:T.class)forallT-instance-method" class="signature"><strong>#expect</strong>(value, kind : <span class="t">T</span>.<span class="k">class</span>) forall T</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#line_number:Int32-instance-method" class="signature"><strong>#line_number</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#max_nesting:Int32-instance-method" class="signature"><strong>#max_nesting</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#max_nesting=(max_nesting:Int32)-instance-method" class="signature"><strong>#max_nesting=</strong>(max_nesting : Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_array(&block)-instance-method" class="signature"><strong>#read_array</strong>(&block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_array_unchecked(&block)-instance-method" class="signature"><strong>#read_array_unchecked</strong>(&block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_document(&block)-instance-method" class="signature"><strong>#read_document</strong>(&block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_hash(&block)-instance-method" class="signature"><strong>#read_hash</strong>(&block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_hash_unchecked(&block)-instance-method" class="signature"><strong>#read_hash_unchecked</strong>(&block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_key:String-instance-method" class="signature"><strong>#read_key</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_key_unchecked:String%7CToken%7CNil-instance-method" class="signature"><strong>#read_key_unchecked</strong> : String | Token | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_value:Type-instance-method" class="signature"><strong>#read_value</strong> : Type</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_value_unchecked:Type%7CToken-instance-method" class="signature"><strong>#read_value_unchecked</strong> : Type | Token</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#skip_value-instance-method" class="signature"><strong>#skip_value</strong></a>
+        
+          <div class="summary"><p>Skips all subdata of a key</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#type_error(value,kind)-instance-method" class="signature"><strong>#type_error</strong>(value, kind)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../Reference.html">Reference</a></code></h3>
+  
+  
+    <a href="../Reference.html#==(other:CON::Any)-instance-method" class="tooltip">
+      <span>==(other : CON::Any)</span>
+    ==</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../Object.html">Object</a></code></h3>
+  
+  
+    <a href="../Object.html#===(other:CON::Any)-instance-method" class="tooltip">
+      <span>===(other : CON::Any)</span>
+    ===</a>, 
+    
+  
+    <a href="../Object.html#from_con(con:String%7CIO)-instance-method" class="tooltip">
+      <span>from_con(con : String | IO)</span>
+    from_con</a>, 
+    
+  
+    <a href="../Object.html#to_con(io:IO)-instance-method" class="tooltip">
+      <span>to_con(io : IO)<br/>to_con</span>
+    to_con</a>, 
+    
+  
+    <a href="../Object.html#to_pretty_con(indent:String=&quot;&quot;)-instance-method" class="tooltip">
+      <span>to_pretty_con(indent : String = <span class="s">&quot;  &quot;</span>)<br/>to_pretty_con(io : IO, indent : String = <span class="s">&quot;  &quot;</span>)</span>
+    to_pretty_con</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>Constructor Detail</h2>
+  
+    <div class="entry-detail" id="new(string:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(string : <a href="../String.html">String</a>)
+
+        <a class="method-permalink" href="#new(string:String)-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L47" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(io:IO)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(io : IO)
+
+        <a class="method-permalink" href="#new(io:IO)-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L51" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="column_number:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>column_number</strong> : Int32
+
+        <a class="method-permalink" href="#column_number:Int32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L43" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="expect(value,kind)-instance-method">
+      <div class="signature">
+        
+        def <strong>expect</strong>(value, kind)
+
+        <a class="method-permalink" href="#expect(value,kind)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L134" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="expect(value,kind:T.class)forallT-instance-method">
+      <div class="signature">
+        
+        def <strong>expect</strong>(value, kind : <span class="t">T</span>.<span class="k">class</span>) forall T
+
+        <a class="method-permalink" href="#expect(value,kind:T.class)forallT-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L129" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="line_number:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>line_number</strong> : Int32
+
+        <a class="method-permalink" href="#line_number:Int32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L39" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="max_nesting:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>max_nesting</strong> : Int32
+
+        <a class="method-permalink" href="#max_nesting:Int32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L6" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="max_nesting=(max_nesting:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>max_nesting=</strong>(max_nesting : Int32)
+
+        <a class="method-permalink" href="#max_nesting=(max_nesting:Int32)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_array(&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>read_array</strong>(&block)
+
+        <a class="method-permalink" href="#read_array(&block)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L83" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_array_unchecked(&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>read_array_unchecked</strong>(&block)
+
+        <a class="method-permalink" href="#read_array_unchecked(&block)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L71" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_document(&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>read_document</strong>(&block)
+
+        <a class="method-permalink" href="#read_document(&block)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L110" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_hash(&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>read_hash</strong>(&block)
+
+        <a class="method-permalink" href="#read_hash(&block)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L103" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_hash_unchecked(&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>read_hash_unchecked</strong>(&block)
+
+        <a class="method-permalink" href="#read_hash_unchecked(&block)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L91" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_key:String-instance-method">
+      <div class="signature">
+        
+        def <strong>read_key</strong> : <a href="../String.html">String</a>
+
+        <a class="method-permalink" href="#read_key:String-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L55" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_key_unchecked:String|Token|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>read_key_unchecked</strong> : <a href="../String.html">String</a> | <a href="../CON/Token.html">Token</a> | <a href="../Nil.html">Nil</a>
+
+        <a class="method-permalink" href="#read_key_unchecked:String%7CToken%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L59" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_value:Type-instance-method">
+      <div class="signature">
+        
+        def <strong>read_value</strong> : <a href="../CON/Type.html">Type</a>
+
+        <a class="method-permalink" href="#read_value:Type-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L63" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_value_unchecked:Type|Token-instance-method">
+      <div class="signature">
+        
+        def <strong>read_value_unchecked</strong> : <a href="../CON/Type.html">Type</a> | <a href="../CON/Token.html">Token</a>
+
+        <a class="method-permalink" href="#read_value_unchecked:Type%7CToken-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L67" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="skip_value-instance-method">
+      <div class="signature">
+        
+        def <strong>skip_value</strong>
+
+        <a class="method-permalink" href="#skip_value-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Skips all subdata of a key</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="type_error(value,kind)-instance-method">
+      <div class="signature">
+        
+        def <strong>type_error</strong>(value, kind)
+
+        <a class="method-permalink" href="#type_error(value,kind)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/pull_parser.cr#L141" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>

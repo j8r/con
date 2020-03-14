@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.30.1">
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="../js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "../";
+</script>
+
+  <meta id="repository-name" content="github.com/j8r/con">
+  <title>Time::Format - github.com/j8r/con</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../index.html">README</a>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" " data-id="github.com/j8r/con/Array" data-name="array(t)">
+      <a href="../Array.html">Array</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/BigDecimal" data-name="bigdecimal">
+      <a href="../BigDecimal.html">BigDecimal</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/BigFloat" data-name="bigfloat">
+      <a href="../BigFloat.html">BigFloat</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/BigInt" data-name="bigint">
+      <a href="../BigInt.html">BigInt</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Bool" data-name="bool">
+      <a href="../Bool.html">Bool</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/j8r/con/CON" data-name="con">
+      <a href="../CON.html">CON</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="github.com/j8r/con/CON/Any" data-name="con::any">
+      <a href="../CON/Any.html">Any</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Any/Type" data-name="con::any::type">
+      <a href="../CON/Any/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/j8r/con/CON/Builder" data-name="con::builder">
+      <a href="../CON/Builder.html">Builder</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Builder/Error" data-name="con::builder::error">
+      <a href="../CON/Builder/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Error" data-name="con::error">
+      <a href="../CON/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/j8r/con/CON/Lexer" data-name="con::lexer">
+      <a href="../CON/Lexer.html">Lexer</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Lexer/FromIO" data-name="con::lexer::fromio">
+      <a href="../CON/Lexer/FromIO.html">FromIO</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Lexer/FromString" data-name="con::lexer::fromstring">
+      <a href="../CON/Lexer/FromString.html">FromString</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Lexer/Main" data-name="con::lexer::main">
+      <a href="../CON/Lexer/Main.html">Main</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/ParseException" data-name="con::parseexception">
+      <a href="../CON/ParseException.html">ParseException</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/PullParser" data-name="con::pullparser">
+      <a href="../CON/PullParser.html">PullParser</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Token" data-name="con::token">
+      <a href="../CON/Token.html">Token</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Type" data-name="con::type">
+      <a href="../CON/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Enum" data-name="enum">
+      <a href="../Enum.html">Enum</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Float" data-name="float">
+      <a href="../Float.html">Float</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Hash" data-name="hash(k, v)">
+      <a href="../Hash.html">Hash</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Int" data-name="int">
+      <a href="../Int.html">Int</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/j8r/con/JSON" data-name="json">
+      <a href="../JSON.html">JSON</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/j8r/con/JSON/Any" data-name="json::any">
+      <a href="../JSON/Any.html">Any</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/NamedTuple" data-name="namedtuple(**t)">
+      <a href="../NamedTuple.html">NamedTuple</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Nil" data-name="nil">
+      <a href="../Nil.html">Nil</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Object" data-name="object">
+      <a href="../Object.html">Object</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Reference" data-name="reference">
+      <a href="../Reference.html">Reference</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Regex" data-name="regex">
+      <a href="../Regex.html">Regex</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Set" data-name="set(t)">
+      <a href="../Set.html">Set</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/String" data-name="string">
+      <a href="../String.html">String</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Symbol" data-name="symbol">
+      <a href="../Symbol.html">Symbol</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="github.com/j8r/con/Time" data-name="time">
+      <a href="../Time.html">Time</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/j8r/con/Time/EpochConverter" data-name="time::epochconverter">
+      <a href="../Time/EpochConverter.html">EpochConverter</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Time/EpochMillisConverter" data-name="time::epochmillisconverter">
+      <a href="../Time/EpochMillisConverter.html">EpochMillisConverter</a>
+      
+    </li>
+  
+  <li class=" current" data-id="github.com/j8r/con/Time/Format" data-name="time::format">
+      <a href="../Time/Format.html">Format</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Tuple" data-name="tuple(*t)">
+      <a href="../Tuple.html">Tuple</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Union" data-name="union(*t)">
+      <a href="../Union.html">Union</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/UUID" data-name="uuid">
+      <a href="../UUID.html">UUID</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Value" data-name="value">
+      <a href="../Value.html">Value</a>
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">struct</span> Time::Format
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Time/Format.html">Time::Format</a></li><li class="superclass">Struct</li><li class="superclass"><a href="../Value.html">Value</a></li><li class="superclass"><a href="../Object.html">Object</a></li></ul>
+
+
+
+
+  <h2>Overview</h2>
+
+  <p>Specifies the format to convert a <code><a href="../Time.html">Time</a></code> to and from a <code><a href="../String.html">String</a></code>.</p>
+
+<p>The pattern of a format is a <code><a href="../String.html">String</a></code> with directives. Directives
+being with a percent (<code>%</code>) character. Any text not listed as a directive
+will be passed/parsed through the output/input string.</p>
+
+<p>The directives are:</p>
+
+<ul><li><strong>%a</strong>: short day name (Sun, Mon, Tue, ...)</li><li><strong>%^a</strong>: short day name, upcase (SUN, MON, TUE, ...)</li><li><strong>%A</strong>: day name (Sunday, Monday, Tuesday, ...)</li><li><strong>%^A</strong>: day name, upcase (SUNDAY, MONDAY, TUESDAY, ...)</li><li><strong>%b</strong>: short month name (Jan, Feb, Mar, ...)</li><li><strong>%^b</strong>: short month name, upcase (JAN, FEB, MAR, ...)</li><li><strong>%B</strong>: month name (January, February, March, ...)</li><li><strong>%^B</strong>: month name, upcase (JANUARY, FEBRUARY, MARCH, ...)</li><li><strong>%c</strong>: date and time (Tue Apr  5 10:26:19 2016)</li><li><strong>%C</strong>: year divided by 100</li><li><strong>%d</strong>: day of month, zero padded (01, 02, ...)</li><li><strong>%-d</strong>: day of month (1, 2, ..., 31)</li><li><strong>%D</strong>: date (04/05/16)</li><li><strong>%e</strong>: day of month, blank padded (" 1", " 2", ..., "10", "11", ...)</li><li><strong>%F</strong>: ISO 8601 date (2016-04-05)</li><li><strong>%g</strong>: week-based calendar year modulo 100 (00..99)</li><li><strong>%G</strong>: week-based calendar year (0001..9999)</li><li><strong>%h</strong>: (same as %b) short month name (Jan, Feb, Mar, ...)</li><li><strong>%H</strong>: hour of the day, 24-hour clock, zero padded (00, 01, ..., 24)</li><li><strong>%I</strong>: hour of the day, 12-hour clock, zero padded (00, 01, ..., 12)</li><li><strong>%j</strong>: day of year, zero padded (001, 002, ..., 365)</li><li><strong>%k</strong>: hour of the day, 24-hour clock, blank padded (" 0", " 1", ..., "24")</li><li><strong>%l</strong>: hour of the day, 12-hour clock, blank padded (" 0", " 1", ..., "12")</li><li><strong>%L</strong>: milliseconds, zero padded (000, 001, ..., 999) (same as <strong>%3N</strong>)</li><li><strong>%m</strong>: month number, zero padded (01, 02, ..., 12)</li><li><strong>%_m</strong>: month number, blank padded (" 1", " 2", ..., "12")</li><li><strong>%-m</strong>: month number (1, 2, ..., 12)</li><li><strong>%M</strong>: minute, zero padded (00, 01, 02, ..., 59)</li><li><strong>%3N</strong>: milliseconds, zero padded (000, 001, ..., 999) (same as <strong>%L</strong>)</li><li><strong>%6N</strong>: microseconds, zero padded (000000, 000001, ..., 999999)</li><li><strong>%9N</strong>: nanoseconds, zero padded (000000000, 000000001, ..., 999999999)</li><li><strong>%N</strong>: second fraction, zero padded. (Same as <code>%9N</code> but may consume more than 9 digits while parsing)</li><li><strong>%p</strong>: am-pm (lowercase)</li><li><strong>%P</strong>: AM-PM (uppercase)</li><li><strong>%r</strong>: 12-hour time (03:04:05 AM)</li><li><strong>%R</strong>: 24-hour time (13:04)</li><li><strong>%s</strong>: seconds since unix epoch (see <code>Time#to_unix</code>)</li><li><strong>%S</strong>: seconds, zero padded (00, 01, ..., 59)</li><li><strong>%T</strong>: 24-hour time (13:04:05)</li><li><strong>%u</strong>: day of week (Monday is 1, 1..7)</li><li><strong>%V</strong>: ISO calendar week number of the week-based year (01..53)</li><li><strong>%w</strong>: day of week (Sunday is 0, 0..6)</li><li><strong>%x</strong>: (same as %D) date (04/05/16)</li><li><strong>%X</strong>: (same as %T) 24-hour time (13:04:05)</li><li><strong>%y</strong>: year modulo 100</li><li><strong>%Y</strong>: year, zero padded</li><li><strong>%z</strong>: time zone as hour and minute offset from UTC (+0900)</li><li><strong>%:z</strong>: time zone as hour and minute offset from UTC with a colon (+09:00)</li><li><strong>%::z</strong>: time zone as hour, minute and second offset from UTC with a colon (+09:00:00)</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/to_con.cr#L117" target="_blank">
+        to_con.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/from_con.cr#L210" target="_blank">
+        from_con.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+
+
+  <h2>Class Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#from_con(value,pull:CON::PullParser)-class-method" class="signature"><strong>.from_con</strong>(value, pull : CON::PullParser)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#from_con(pull:CON::PullParser)-class-method" class="signature"><strong>.from_con</strong>(pull : CON::PullParser)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#to_con(value:Time,con:CON::Builder)-instance-method" class="signature"><strong>#to_con</strong>(value : Time, con : CON::Builder)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from struct <code><a href="../Value.html">Value</a></code></h3>
+  
+  
+    <a href="../Value.html#==(other:CON::Any)-instance-method" class="tooltip">
+      <span>==(other : CON::Any)</span>
+    ==</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../Object.html">Object</a></code></h3>
+  
+  
+    <a href="../Object.html#===(other:CON::Any)-instance-method" class="tooltip">
+      <span>===(other : CON::Any)</span>
+    ===</a>, 
+    
+  
+    <a href="../Object.html#from_con(con:String%7CIO)-instance-method" class="tooltip">
+      <span>from_con(con : String | IO)</span>
+    from_con</a>, 
+    
+  
+    <a href="../Object.html#to_con(io:IO)-instance-method" class="tooltip">
+      <span>to_con(io : IO)<br/>to_con</span>
+    to_con</a>, 
+    
+  
+    <a href="../Object.html#to_pretty_con(indent:String=&quot;&quot;)-instance-method" class="tooltip">
+      <span>to_pretty_con(indent : String = <span class="s">&quot;  &quot;</span>)<br/>to_pretty_con(io : IO, indent : String = <span class="s">&quot;  &quot;</span>)</span>
+    to_pretty_con</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+
+
+  <h2>Class Method Detail</h2>
+  
+    <div class="entry-detail" id="from_con(value,pull:CON::PullParser)-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_con</strong>(value, pull : <a href="../CON/PullParser.html">CON::PullParser</a>)
+
+        <a class="method-permalink" href="#from_con(value,pull:CON::PullParser)-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/from_con.cr#L215" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="from_con(pull:CON::PullParser)-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_con</strong>(pull : <a href="../CON/PullParser.html">CON::PullParser</a>)
+
+        <a class="method-permalink" href="#from_con(pull:CON::PullParser)-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/from_con.cr#L211" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="to_con(value:Time,con:CON::Builder)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_con</strong>(value : <a href="../Time.html">Time</a>, con : <a href="../CON/Builder.html">CON::Builder</a>)
+
+        <a class="method-permalink" href="#to_con(value:Time,con:CON::Builder)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/to_con.cr#L118" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>

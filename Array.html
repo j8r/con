@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.30.1">
+
+
+<link href="css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "";
+</script>
+
+  <meta id="repository-name" content="github.com/j8r/con">
+  <title>Array(T) - github.com/j8r/con</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="index.html">README</a>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class=" current" data-id="github.com/j8r/con/Array" data-name="array(t)">
+      <a href="Array.html">Array</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/BigDecimal" data-name="bigdecimal">
+      <a href="BigDecimal.html">BigDecimal</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/BigFloat" data-name="bigfloat">
+      <a href="BigFloat.html">BigFloat</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/BigInt" data-name="bigint">
+      <a href="BigInt.html">BigInt</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Bool" data-name="bool">
+      <a href="Bool.html">Bool</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/j8r/con/CON" data-name="con">
+      <a href="CON.html">CON</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="github.com/j8r/con/CON/Any" data-name="con::any">
+      <a href="CON/Any.html">Any</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Any/Type" data-name="con::any::type">
+      <a href="CON/Any/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/j8r/con/CON/Builder" data-name="con::builder">
+      <a href="CON/Builder.html">Builder</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Builder/Error" data-name="con::builder::error">
+      <a href="CON/Builder/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Error" data-name="con::error">
+      <a href="CON/Error.html">Error</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/j8r/con/CON/Lexer" data-name="con::lexer">
+      <a href="CON/Lexer.html">Lexer</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Lexer/FromIO" data-name="con::lexer::fromio">
+      <a href="CON/Lexer/FromIO.html">FromIO</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Lexer/FromString" data-name="con::lexer::fromstring">
+      <a href="CON/Lexer/FromString.html">FromString</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Lexer/Main" data-name="con::lexer::main">
+      <a href="CON/Lexer/Main.html">Main</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/ParseException" data-name="con::parseexception">
+      <a href="CON/ParseException.html">ParseException</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/PullParser" data-name="con::pullparser">
+      <a href="CON/PullParser.html">PullParser</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Token" data-name="con::token">
+      <a href="CON/Token.html">Token</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/CON/Type" data-name="con::type">
+      <a href="CON/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Enum" data-name="enum">
+      <a href="Enum.html">Enum</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Float" data-name="float">
+      <a href="Float.html">Float</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Hash" data-name="hash(k, v)">
+      <a href="Hash.html">Hash</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Int" data-name="int">
+      <a href="Int.html">Int</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/j8r/con/JSON" data-name="json">
+      <a href="JSON.html">JSON</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/j8r/con/JSON/Any" data-name="json::any">
+      <a href="JSON/Any.html">Any</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/NamedTuple" data-name="namedtuple(**t)">
+      <a href="NamedTuple.html">NamedTuple</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Nil" data-name="nil">
+      <a href="Nil.html">Nil</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Object" data-name="object">
+      <a href="Object.html">Object</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Reference" data-name="reference">
+      <a href="Reference.html">Reference</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Regex" data-name="regex">
+      <a href="Regex.html">Regex</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Set" data-name="set(t)">
+      <a href="Set.html">Set</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/String" data-name="string">
+      <a href="String.html">String</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Symbol" data-name="symbol">
+      <a href="Symbol.html">Symbol</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/j8r/con/Time" data-name="time">
+      <a href="Time.html">Time</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/j8r/con/Time/EpochConverter" data-name="time::epochconverter">
+      <a href="Time/EpochConverter.html">EpochConverter</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Time/EpochMillisConverter" data-name="time::epochmillisconverter">
+      <a href="Time/EpochMillisConverter.html">EpochMillisConverter</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Time/Format" data-name="time::format">
+      <a href="Time/Format.html">Format</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Tuple" data-name="tuple(*t)">
+      <a href="Tuple.html">Tuple</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Union" data-name="union(*t)">
+      <a href="Union.html">Union</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/UUID" data-name="uuid">
+      <a href="UUID.html">UUID</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/j8r/con/Value" data-name="value">
+      <a href="Value.html">Value</a>
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> Array(T)
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="Array.html">Array(T)</a></li><li class="superclass"><a href="Reference.html">Reference</a></li><li class="superclass"><a href="Object.html">Object</a></li></ul>
+
+
+
+
+  <h2>Overview</h2>
+
+  <p>An <code><a href="Array.html">Array</a></code> is an ordered, integer-indexed collection of objects of type T.</p>
+
+<p>Array indexing starts at 0. A negative index is assumed to be
+relative to the end of the array: -1 indicates the last element,
+-2 is the next to last element, and so on.</p>
+
+<p>An <code><a href="Array.html">Array</a></code> can be created using the usual <code>new</code> method (several are provided), or with an array literal:</p>
+
+<pre><code><span class="t">Array</span>(<span class="t">Int32</span>).<span class="k">new</span>  <span class="c"># =&gt; []</span>
+[<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>]         <span class="c"># Array(Int32)</span>
+[<span class="n">1</span>, <span class="s">&quot;hello&quot;</span>, <span class="s">&#39;x&#39;</span>] <span class="c"># Array(Int32 | String | Char)</span></code></pre>
+
+<p>An <code><a href="Array.html">Array</a></code> can have mixed types, meaning T will be a union of types, but these are determined
+when the array is created, either by specifying T or by using an array literal. In the latter
+case, T will be set to the union of the array literal elements' types.</p>
+
+<p>When creating an empty array you must always specify T:</p>
+
+<pre><code><span class="o">[]</span> <span class="k">of</span> <span class="t">Int32</span> <span class="c"># same as Array(Int32)</span>
+<span class="o">[]</span>          <span class="c"># syntax error</span></code></pre>
+
+<p>An <code><a href="Array.html">Array</a></code> is implemented using an internal buffer of some capacity
+and is reallocated when elements are pushed to it when more capacity
+is needed. This is normally known as a <a href="http://en.wikipedia.org/wiki/Dynamic_array" target="_blank">dynamic array</a>.</p>
+
+<p>You can use a special array literal syntax with other types too, as long as they define an argless
+<code>new</code> method and a <code><<</code> method. <code><a href="Set.html">Set</a></code> is one such type:</p>
+
+<pre><code>set <span class="o">=</span> <span class="t">Set</span>{<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>} <span class="c"># =&gt; Set{1, 2, 3}</span>
+set.<span class="k">class</span>          <span class="c"># =&gt; Set(Int32)</span></code></pre>
+
+<p>The above is the same as this:</p>
+
+<pre><code>set <span class="o">=</span> <span class="t">Set</span>(<span class="k">typeof</span>(<span class="n">1</span>, <span class="n">2</span>, <span class="n">3</span>)).<span class="k">new</span>
+set <span class="o">&lt;&lt;</span> <span class="n">1</span>
+set <span class="o">&lt;&lt;</span> <span class="n">2</span>
+set <span class="o">&lt;&lt;</span> <span class="n">3</span></code></pre>
+
+
+
+
+
+  <h2>Included Modules</h2>
+  <ul class="other-types-list">
+  
+    <li class="other-type">Comparable(<a href="Array.html">Array(T)</a>)</li>
+  
+    <li class="other-type">Indexable(T)</li>
+  
+  </ul>
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/to_con.cr#L61" target="_blank">
+        to_con.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/any.cr#L320" target="_blank">
+        any.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/from_con.cr#L57" target="_blank">
+        from_con.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+
+
+  <h2>Class Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#from_con(pull:CON::PullParser):Array(T)-class-method" class="signature"><strong>.from_con</strong>(pull : CON::PullParser) : Array(T)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#==(other:CON::Any)-instance-method" class="signature"><strong>#==</strong>(other : CON::Any)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_con(con:CON::Builder)-instance-method" class="signature"><strong>#to_con</strong>(con : CON::Builder)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="Reference.html">Reference</a></code></h3>
+  
+  
+    <a href="Reference.html#==(other:CON::Any)-instance-method" class="tooltip">
+      <span>==(other : CON::Any)</span>
+    ==</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="Object.html">Object</a></code></h3>
+  
+  
+    <a href="Object.html#===(other:CON::Any)-instance-method" class="tooltip">
+      <span>===(other : CON::Any)</span>
+    ===</a>, 
+    
+  
+    <a href="Object.html#from_con(con:String%7CIO)-instance-method" class="tooltip">
+      <span>from_con(con : String | IO)</span>
+    from_con</a>, 
+    
+  
+    <a href="Object.html#to_con(io:IO)-instance-method" class="tooltip">
+      <span>to_con(io : IO)<br/>to_con</span>
+    to_con</a>, 
+    
+  
+    <a href="Object.html#to_pretty_con(indent:String=&quot;&quot;)-instance-method" class="tooltip">
+      <span>to_pretty_con(indent : String = <span class="s">&quot;  &quot;</span>)<br/>to_pretty_con(io : IO, indent : String = <span class="s">&quot;  &quot;</span>)</span>
+    to_pretty_con</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+
+
+  <h2>Class Method Detail</h2>
+  
+    <div class="entry-detail" id="from_con(pull:CON::PullParser):Array(T)-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_con</strong>(pull : <a href="CON/PullParser.html">CON::PullParser</a>) : <a href="Array.html">Array</a>(T)
+
+        <a class="method-permalink" href="#from_con(pull:CON::PullParser):Array(T)-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/from_con.cr#L58" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="==(other:CON::Any)-instance-method">
+      <div class="signature">
+        
+        def <strong>==</strong>(other : <a href="CON/Any.html">CON::Any</a>)
+
+        <a class="method-permalink" href="#==(other:CON::Any)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/any.cr#L321" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_con(con:CON::Builder)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_con</strong>(con : <a href="CON/Builder.html">CON::Builder</a>)
+
+        <a class="method-permalink" href="#to_con(con:CON::Builder)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/j8r/con/blob/5480d5efaf4d8b2ca7debd1041e226f08921214e/src/to_con.cr#L62" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
